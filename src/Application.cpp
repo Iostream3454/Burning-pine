@@ -9,7 +9,9 @@ void Application::runApplication()
 {
 	sf::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Cyan);
-
+	IScene* tScene = new MenuScene;
+	IScene* tGScene = new GameScene;
+	sceneManager_.changeScene(*tScene);
 	while (window_.isOpen()) {//основной цикл
 		timeManager_.updateTime();
 		while (const std::optional event = window_.pollEvent())
@@ -19,5 +21,7 @@ void Application::runApplication()
 			if (event->is<sf::Event::Closed>())
 				window_.close();
 		}
+		float dt = timeManager_.getDeltaTime();
+		sceneManager_.updateScene(dt);
 	}
 }
