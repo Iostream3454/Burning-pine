@@ -2,6 +2,7 @@
 #include<SFML/Graphics.hpp>
 #include <TGUI/TGUI.hpp>
 #include <TGUI/Backend/SFML-Graphics.hpp>
+#include "TimeManager.h"
 
 class Application {//этот класс является точкой создания оконного приложения 
 public:
@@ -12,4 +13,5 @@ public:
 private:
 	sf::RenderWindow window_; //переменная окна
 	tgui::Gui gui_;//переменная для подключения TGUI
+	TimeManager timeManager_;
 };

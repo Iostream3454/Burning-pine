@@ -11,6 +11,7 @@ void Application::runApplication()
 	shape.setFillColor(sf::Color::Cyan);
 
 	while (window_.isOpen()) {//основной цикл
+		timeManager_.updateTime();
 		while (const std::optional event = window_.pollEvent())
 		{
 			gui_.handleEvent(*event);
