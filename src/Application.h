@@ -4,6 +4,7 @@
 #include <TGUI/Backend/SFML-Graphics.hpp>
 #include "TimeManager.h"
 #include "SceneManager.h"
+#include "Scene.h"
 #include "ScenesRealizations.h"
 
 class Application {//этот класс является точкой создания оконного приложения 

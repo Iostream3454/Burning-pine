@@ -4,22 +4,22 @@
 
 class MenuScene : public IScene{
 public:
-	void _ready() override {
+	void ready_() override {
 		std::cerr << "You are in menu scene!\n";
 	}
 
-	void _update(float deltaTime) override {
+	void update_(float deltaTime) override {
 		std::cerr << deltaTime << "\r\033[0K";
 	}
 };
 
 class GameScene : public IScene {
 public:
-	void _ready() override {
+	void ready_() override {
 		std::cerr << "You are in game scene!\n";
 	}
 
-	void _update(float deltaTime) override {
+	void update_(float deltaTime) override {
 		std::cerr << deltaTime << "\r\033[0K";
 	}
 };

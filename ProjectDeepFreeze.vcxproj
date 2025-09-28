@@ -137,6 +137,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\Scene.h" />
+    <ClInclude Include="src\SceneManager.h" />
+    <ClInclude Include="src\ScenesRealizations.h" />
+    <ClInclude Include="src\TimeManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

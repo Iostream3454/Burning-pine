@@ -5,15 +5,18 @@
 class SceneManager {
 public:
 
-	void changeScene(IScene& newScene) {
-		newScene._ready();
-		currentScene_ = std::make_unique<IScene>(newScene);
+	void changeScene(IScene*& newScene) {
+		currentScene_ = newScene;
+		currentScene_->ready_();
 	}
 
 	inline void updateScene(float& deltaTime) {
-		currentScene_.get()->_update(deltaTime);
+		currentScene_->update_(deltaTime);
 	}
 
+	inline IScene* getCurrScene() { return currentScene_; }
+
+
 private:
-	std::unique_ptr<IScene> currentScene_;
+	IScene* currentScene_ = nullptr;
 };

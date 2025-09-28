@@ -1,6 +1,8 @@
 #pragma once
 
-__interface IScene {
-	void _ready() = 0;
-	void _update(float deltaTime) = 0;
+class IScene {
+public:
+	virtual void ready_() = 0;
+	virtual void update_(float deltaTime) = 0;
+	virtual ~IScene() = default;
 };
