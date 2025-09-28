@@ -1,8 +1,8 @@
 #include"Application.h"
 
-Application::Application() : window_(sf::VideoMode({ 200, 200 }), "SFML Works"), gui_(window_)
+Application::Application() : window_(sf::VideoMode({ 200, 200 }), "SFML Works"), gui_(window_)//подключение gui к окну
 {
-	window_.setVerticalSyncEnabled(true);
+	window_.setVerticalSyncEnabled(true);//вертикальная синхронизация
 }
 
 void Application::runApplication()
@@ -10,7 +10,7 @@ void Application::runApplication()
 	sf::CircleShape shape(100.f);
 	shape.setFillColor(sf::Color::Cyan);
 
-	while (window_.isOpen()) {
+	while (window_.isOpen()) {//основной цикл
 		while (const std::optional event = window_.pollEvent())
 		{
 			gui_.handleEvent(*event);

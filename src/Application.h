@@ -3,13 +3,13 @@
 #include <TGUI/TGUI.hpp>
 #include <TGUI/Backend/SFML-Graphics.hpp>
 
-class Application {
+class Application {//этот класс является точкой создания оконного приложения 
 public:
 	Application();
 
 	void runApplication();
 
 private:
-	sf::RenderWindow window_;
-	tgui::Gui gui_;
+	sf::RenderWindow window_; //переменная окна
+	tgui::Gui gui_;//переменная для подключения TGUI
 };
