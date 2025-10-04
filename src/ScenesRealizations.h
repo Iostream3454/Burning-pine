@@ -4,7 +4,7 @@
 
 class MenuScene : public IScene{
 public:
-	void handleEvent_() override {
+	void handleEvent_(const sf::Event& ev) override {
 
 	}
 
@@ -20,7 +20,7 @@ public:
 class GameScene : public IScene {
 public:
 
-	void handleEvent_() override {
+	void handleEvent_(const sf::Event& ev) override {
 
 	}
 
