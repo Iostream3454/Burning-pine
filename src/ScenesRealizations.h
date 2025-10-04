@@ -4,6 +4,10 @@
 
 class MenuScene : public IScene{
 public:
+	void handleEvent_() override {
+
+	}
+
 	void ready_() override {
 		std::cerr << "You are in menu scene!\n";
 	}
@@ -15,6 +19,11 @@ public:
 
 class GameScene : public IScene {
 public:
+
+	void handleEvent_() override {
+
+	}
+
 	void ready_() override {
 		std::cerr << "You are in game scene!\n";
 	}
