@@ -5,12 +5,25 @@
 #include <TGUI/TGUI.hpp>
 #include <TGUI/Backend/SFML-Graphics.hpp>
 
-class Window 
+class Window
 {
 public:
 	Window(uint16_t wight, uint16_t hight, std::string title);
+	static sf::RenderWindow& instance() {
+		static Window singleton;
+		return singleton.mWindow_;
+	}
 
-	void run();
+	Window(const Window&)				= delete;
+	Window& operator=(const Window&)	= delete;
+	Window(Window&&)					= delete;
+	Window& operator=(Window&&)			= delete;
+	static void close() {
+		instance().close();
+	}
 private:
-	sf::RenderWindow window_;
+	Window() : mWindow_(sf::VideoMode({1200, 800}), "Burning pine") {};
+
+	~Window()			= default;
+	sf::RenderWindow	mWindow_;
 };
