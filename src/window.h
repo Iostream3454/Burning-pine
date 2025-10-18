@@ -8,7 +8,6 @@
 class Window
 {
 public:
-	Window(uint16_t wight, uint16_t hight, std::string title);
 	static sf::RenderWindow& instance() {
 		static Window singleton;
 		return singleton.mWindow_;
