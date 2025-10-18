@@ -16,8 +16,9 @@ void MainMenuScene::ready() {
 	vert->setWidth(250); vert->setHeight(300); //vert->setAutoLayout(tgui::AutoLayout::Top);
 	vert.get()->add(gameName); vert.get()->add(butt); vert.get()->add(butt2);
 	vert->setPosition("50%", "50%"); vert->setOrigin(0.5f, 0.5f);
+	gameName->setHorizontalAlignment(tgui::Label::HorizontalAlignment::Center);
 	mGuiLayer.add(vert);
-	gameName->setPosition("50%", "50%");
+	//gameName->setPosition("50%", "50%");
 	vert->getRenderer()->setSpaceBetweenWidgets(10);
 }
 
