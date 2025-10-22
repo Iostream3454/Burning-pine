@@ -7,6 +7,5 @@ public:
 	virtual void handlerEvent(const sf::Event& ev) = 0;
 	virtual void update(float& dt) = 0;
 	virtual void render(sf::RenderWindow& win) = 0;
-protected:
 	~IScene() = default;
 };

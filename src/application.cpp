@@ -3,17 +3,18 @@
 #include<memory>
 
 void Application::run() {
-	MainMenuScene mmScene;
-	mmScene.ready(); float dt = float(1.0 / 60);
+	//MainMenuScene mmScene;
+	std::unique_ptr<IScene> mm = std::make_unique<MainMenuScene>();
+	mm->ready(); float dt = float(1.0 / 60);
 	while (mWindow.isOpen()) {
 		while (const std::optional<sf::Event> event = mWindow.pollEvent()) {
 			if (event->is<sf::Event::Closed>()) Window::close(); //close window in singleton
 
-			mmScene.handlerEvent(*event);
+			mm->handlerEvent(*event);
 		}
-		mmScene.update(dt);
+		mm->update(dt);
 		mWindow.clear(sf::Color::White);
-		mmScene.render(mWindow);
+		mm->render(mWindow);
 
 	}
 
