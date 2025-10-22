@@ -27,6 +27,7 @@
     <ClInclude Include="src\application.h" />
     <ClInclude Include="src\mainMenuScene.h" />
     <ClInclude Include="src\sceneInterface.h" />
+    <ClInclude Include="src\sceneManager.h" />
     <ClInclude Include="src\window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
