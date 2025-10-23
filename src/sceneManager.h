@@ -14,6 +14,7 @@ public:
 	SceneManager& operator=(SceneManager&&) = delete;
 
 	static void push(std::unique_ptr<IScene> scene) {
+		if (!mSceneStack.empty()) mSceneStack.pop();;
 		mSceneStack.push(std::move(scene));
 		mSceneStack.top()->ready();
 	}
@@ -51,4 +52,3 @@ private:
 	static std::stack<std::unique_ptr<IScene>> mSceneStack;
 };
 
-std::stack<std::unique_ptr<IScene>> SceneManager::mSceneStack = {};
