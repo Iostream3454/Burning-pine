@@ -20,11 +20,14 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\application.cpp" />
+    <ClCompile Include="src\gameScene.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mainMenuScene.cpp" />
+    <ClCompile Include="src\sceneManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\application.h" />
+    <ClInclude Include="src\gameScene.h" />
     <ClInclude Include="src\mainMenuScene.h" />
     <ClInclude Include="src\sceneInterface.h" />
     <ClInclude Include="src\sceneManager.h" />
