@@ -8,7 +8,6 @@ void GameScene::ready() {
 	butt->setHeight(50);
 	butt->setWidth(150);
 	mGuiLayer.add(butt, "mainMenu");
-	mCharacter.setPosition({ 200.f, 200.f });
 }
 
 void GameScene::handlerEvent(const sf::Event& ev) {

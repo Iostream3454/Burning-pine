@@ -10,11 +10,12 @@ class MainCharacter : public sf::Drawable, public sf::Transformable
 {
 public:
 
-	MainCharacter() :  mCurrentCharacterSpeed(mBaseCharacterSpeed * 1.3f), mTexture("gfx/character.png", false, sf::IntRect({ 10, 10 }, { 32, 32 })), mCharacterCircle(25.f) {
+	MainCharacter() :  mCurrentCharacterSpeed(mBaseCharacterSpeed * 1.3f), mTexture("gfx/character.png", false, sf::IntRect({ 10, 10 }, { 32, 32 })) {
+		mCharacterCircle.setRadius(mCircleRadius);
+		mCharacterPosition = {120.f, 230.f};
 		mCharacterCircle.setFillColor(sf::Color::Black);
+		mCharacterCircle.setPosition(mCharacterPosition);
 	}
-
-	void setPosition(sf::Vector2f&& pos) { mCharacterPosition = pos; }
 
 	bool getHasGoal() { return mHasGoal; }
 
@@ -43,6 +44,8 @@ public:
 				sf::Vector2i pixelPos = sf::Mouse::getPosition(Window::instance());//забираем коорд курсора
 				mPositionGoal = Window::instance().mapPixelToCoords(pixelPos);//переводим их в игровые (уходим от коорд окна)
 				mHasGoal = true;
+				mPositionGoal.x -= mCircleRadius;
+				mPositionGoal.y -= mCircleRadius;
 				/*mCharacterPosition = mPositionGoal; mCharacterCircle.setPosition(
 					{ mPositionGoal.x - mCharacterCircle.getRadius(), mPositionGoal.y - mCharacterCircle.getRadius() }
 				);*/
@@ -78,6 +81,7 @@ private:
 
 	const float		mBaseCharacterSpeed			= 300.0f;
 	float			mCurrentCharacterSpeed;
+	const float		mCircleRadius				= 25.f;
 
 	bool			mHasGoal					= false;
 	bool			mIs_Moving					= false;
