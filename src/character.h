@@ -10,24 +10,42 @@ class MainCharacter : public sf::Drawable, public sf::Transformable
 {
 public:
 
-	MainCharacter() : mCurrentCharacterSpeed(mBaseCharacterSpeed * 1.3f), mTexture("../gfx/character.png"), mCharacterCircle(50) {
-		mCharacterCircle.setTexture(&mTexture); mCharacterCircle.setTextureRect(sf::IntRect({ 50, 50 }, { 100, 100 }));
+	MainCharacter() :  mCurrentCharacterSpeed(mBaseCharacterSpeed * 1.3f), mTexture("gfx/character.png", false, sf::IntRect({ 10, 10 }, { 32, 32 })), mCharacterCircle(25.f) {
+		mCharacterCircle.setFillColor(sf::Color::Black);
 	}
 
-	void move() {
+	void setPosition(sf::Vector2f&& pos) { mCharacterPosition = pos; }
 
+	bool getHasGoal() { return mHasGoal; }
+
+	void move() {
+		if (this->mHasGoal) {
+			float distance = sqrt(
+				(mPositionGoal.x - mCharacterCircle.getPosition().x) * (mPositionGoal.x - mCharacterCircle.getPosition().x) + 
+				(mPositionGoal.y - mCharacterCircle.getPosition().y) * (mPositionGoal.y - mCharacterCircle.getPosition().y));//считаем дистанцию (длину от точки А до точки Б). формула длины вектора
+
+			if (distance > 2.f) {//этим условием убираем дергание во время конечной позиции спрайта
+
+				mCharacterPosition.x += 0.1f  * (mPositionGoal.x - mCharacterCircle.getPosition().x) / distance;//идем по иксу с помощью вектора нормали
+				mCharacterPosition.y += 0.1f  * (mPositionGoal.y - mCharacterCircle.getPosition().y) / distance;//идем по игреку так же
+				mCharacterCircle.setPosition(mCharacterPosition);
+			}
+			else { this->mHasGoal = this->mIs_Moving = false; std::cout << "priehali\n"; }//говорим что уже никуда не идем и выводим веселое сообщение в консоль
+		}
 	}
 	//void updateNeeds();
 
-	void setPositionGoal(sf::Event& event) {
+	void setPositionGoal(const sf::Event& event) {
 		if (const auto* mouseButtonPressed = event.getIf<sf::Event::MouseButtonPressed>())
 		{
 			if (mouseButtonPressed->button == sf::Mouse::Button::Left)
 			{
 				sf::Vector2i pixelPos = sf::Mouse::getPosition(Window::instance());//забираем коорд курсора
 				mPositionGoal = Window::instance().mapPixelToCoords(pixelPos);//переводим их в игровые (уходим от коорд окна)
-				mPositionGoal = { mouseButtonPressed->position.x ,mouseButtonPressed->position.y };
 				mHasGoal = true;
+				/*mCharacterPosition = mPositionGoal; mCharacterCircle.setPosition(
+					{ mPositionGoal.x - mCharacterCircle.getRadius(), mPositionGoal.y - mCharacterCircle.getRadius() }
+				);*/
 				std::cout << "mouse x: " << mPositionGoal.x << std::endl;
 				std::cout << "mouse y: " << mPositionGoal.y << std::endl;
 			}else{ mHasGoal = false; }
