@@ -50,5 +50,8 @@
     <ClInclude Include="src\gameScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\character.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
