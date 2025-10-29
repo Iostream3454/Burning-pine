@@ -10,11 +10,13 @@ class MainCharacter : public sf::Drawable, public sf::Transformable
 {
 public:
 
-	MainCharacter() :  mCurrentCharacterSpeed(mBaseCharacterSpeed * 1.3f), mTexture("gfx/character.png", false, sf::IntRect({ 10, 10 }, { 32, 32 })) {
+	MainCharacter() : mLineToGoal(sf::PrimitiveType::Lines, 2), mCurrentCharacterSpeed(mBaseCharacterSpeed * 1.3f), mTexture("gfx/character.png", false, sf::IntRect({10, 10}, {32, 32})) {
 		mCharacterCircle.setRadius(mCircleRadius);
 		mCharacterPosition = {120.f, 230.f};
 		mCharacterCircle.setFillColor(sf::Color::Black);
 		mCharacterCircle.setPosition(mCharacterPosition);
+		mLineToGoal[0].color = mLineToGoal[1].color = sf::Color::Blue;
+		
 	}
 
 	bool getHasGoal() { return mHasGoal; }
@@ -30,8 +32,15 @@ public:
 				mCharacterPosition.x += 0.1f  * (mPositionGoal.x - mCharacterCircle.getPosition().x) / distance;//идем по иксу с помощью вектора нормали
 				mCharacterPosition.y += 0.1f  * (mPositionGoal.y - mCharacterCircle.getPosition().y) / distance;//идем по игреку так же
 				mCharacterCircle.setPosition(mCharacterPosition);
+				mLineToGoal[int(mLinePos::START)].position = { 
+					mCharacterCircle.getPosition().x + mCircleRadius , 
+					mCharacterCircle.getPosition().y + mCircleRadius 
+				};
 			}
-			else { this->mHasGoal = this->mIs_Moving = false; std::cout << "priehali\n"; }//говорим что уже никуда не идем и выводим веселое сообщение в консоль
+			else { 
+				this->mHasGoal = this->mIs_Moving = false; 
+				std::cout << "priehali\n"; 
+			}//говорим что уже никуда не идем и выводим веселое сообщение в консоль
 		}
 	}
 	//void updateNeeds();
@@ -44,13 +53,17 @@ public:
 				sf::Vector2i pixelPos = sf::Mouse::getPosition(Window::instance());//забираем коорд курсора
 				mPositionGoal = Window::instance().mapPixelToCoords(pixelPos);//переводим их в игровые (уходим от коорд окна)
 				mHasGoal = true;
+				mLineToGoal[int(mLinePos::END)].position = mPositionGoal;
 				mPositionGoal.x -= mCircleRadius;
 				mPositionGoal.y -= mCircleRadius;
+				mLineToGoal[int(mLinePos::START)].position = { mCharacterCircle.getPosition().x + mCircleRadius , mCharacterCircle.getPosition().y + mCircleRadius };
 				/*mCharacterPosition = mPositionGoal; mCharacterCircle.setPosition(
 					{ mPositionGoal.x - mCharacterCircle.getRadius(), mPositionGoal.y - mCharacterCircle.getRadius() }
 				);*/
-				std::cout << "mouse x: " << mPositionGoal.x << std::endl;
-				std::cout << "mouse y: " << mPositionGoal.y << std::endl;
+				std::cout << "mouse x/y: " << mPositionGoal.x << "/" << mPositionGoal.y << std::endl;
+				std::cout << "Line poses: {" << mLineToGoal[int(mLinePos::START)].position.x << " , " << mLineToGoal[int(mLinePos::START)].position.y << "} -> "
+					<< "{" << mLineToGoal[int(mLinePos::END)].position.x << " , " << mLineToGoal[int(mLinePos::END)].position.y << "}"
+					<<std::endl;
 			}else{ mHasGoal = false; }
 		}
 	}
@@ -67,6 +80,10 @@ public:
 		// you may also override states.shader or states.blendMode if you want
 
 		// draw the vertex array
+		if(mHasGoal)
+		{
+			target.draw(mLineToGoal);
+		}
 		target.draw(mCharacterCircle, states);
 	}
 
@@ -85,4 +102,5 @@ private:
 
 	bool			mHasGoal					= false;	//поставлена ли точка, куда надо идти
 	bool			mIs_Moving					= false;	//идет ли игрок
+	enum class mLinePos {START, END};
 };
