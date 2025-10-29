@@ -72,17 +72,17 @@ public:
 
 private:
 
-	sf::Vector2f	mCharacterPosition;
-	sf::CircleShape	mCharacterCircle;
-	sf::Texture		mTexture;
+	sf::Vector2f	mCharacterPosition;						// позиция игрока 
+	sf::CircleShape	mCharacterCircle;						// фигура круга для обозначения игрока
+	sf::Texture		mTexture;								// текстура игрока
 
-	sf::VertexArray mLineToGoal;
-	sf::Vector2f	mPositionGoal;
+	sf::VertexArray mLineToGoal;							// линия от игрока к цели
+	sf::Vector2f	mPositionGoal;							// вектор позиции цели
 
-	const float		mBaseCharacterSpeed			= 300.0f;
-	float			mCurrentCharacterSpeed;
-	const float		mCircleRadius				= 25.f;
+	const float		mBaseCharacterSpeed			= 300.0f;	//базовая скорость
+	float			mCurrentCharacterSpeed;					// скорость с модификаторами
+	const float		mCircleRadius				= 25.f;		//размер круга, обозначающий игрока
 
-	bool			mHasGoal					= false;
-	bool			mIs_Moving					= false;
+	bool			mHasGoal					= false;	//поставлена ли точка, куда надо идти
+	bool			mIs_Moving					= false;	//идет ли игрок
 };
