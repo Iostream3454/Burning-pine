@@ -15,7 +15,7 @@ public:
 		mCharacterPosition = {120.f, 230.f};
 		mCharacterCircle.setFillColor(sf::Color::Black);
 		mCharacterCircle.setPosition(mCharacterPosition);
-		mLineToGoal[0].color = mLineToGoal[1].color = sf::Color::Blue;
+		mLineToGoal[int(mLinePos::START)].color = mLineToGoal[int(mLinePos::END)].color = sf::Color::Blue;
 		
 	}
 
