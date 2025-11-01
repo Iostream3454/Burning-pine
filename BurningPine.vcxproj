@@ -24,6 +24,7 @@
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mainMenuScene.cpp" />
     <ClCompile Include="src\sceneManager.cpp" />
+    <ClCompile Include="src\timeSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\application.h" />
@@ -32,6 +33,7 @@
     <ClInclude Include="src\mainMenuScene.h" />
     <ClInclude Include="src\sceneInterface.h" />
     <ClInclude Include="src\sceneManager.h" />
+    <ClInclude Include="src\timeSystem.h" />
     <ClInclude Include="src\window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

@@ -1,13 +1,19 @@
 #include "mainMenuScene.h"
 #include "gameScene.h"
 #include "sceneManager.h"
+#include "timeSystem.h"
 
 
 void GameScene::ready() {
 	tgui::Button::Ptr butt = tgui::Button::create("MainMenu");
 	butt->setHeight(50);
 	butt->setWidth(150);
+	l = tgui::Label::create("1");
 	mGuiLayer.add(butt, "mainMenu");
+	mGuiLayer.add(l, "lable");
+	l.get()->setAutoSize(true);
+	l.get()->setAutoLayout(tgui::AutoLayout::Bottom);
+	l.get()->setHorizontalAlignment(tgui::HorizontalAlignment::Center);
 }
 
 void GameScene::handlerEvent(const sf::Event& ev) {
@@ -39,6 +45,9 @@ void GameScene::render(sf::RenderWindow& win) {
 void GameScene::update(float& dt) {
 	if (mCharacter.getHasGoal()) {
 		mCharacter.move(dt);
-		
+		if (mCharacter.getIsMoving()) {
+			mTimeSystem.increaseByMinutes(dt);
+			l.get()->setText(mTimeSystem.show());
+		}
 	}
 }
