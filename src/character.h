@@ -25,17 +25,18 @@ public:
 	}
 
 	bool getHasGoal() { return mHasGoal; }
+	void setHasGoal(bool value) {  mHasGoal = value; }
 
-	void move() {
+	void move(float& dt) {
 		if (this->mHasGoal) {
 			float distance = sqrt(
 				(mPositionGoal.x - mCharacterCircle.getPosition().x) * (mPositionGoal.x - mCharacterCircle.getPosition().x) + 
 				(mPositionGoal.y - mCharacterCircle.getPosition().y) * (mPositionGoal.y - mCharacterCircle.getPosition().y));//считаем дистанцию (длину от точки А до точки Б). формула длины вектора
 
-			if (distance > 2.f) {//этим условием убираем дергание во время конечной позиции спрайта
+			if (distance > 4.f) {//этим условием убираем дергание во время конечной позиции спрайта
 
-				mCharacterPosition.x += 0.1f  * (mPositionGoal.x - mCharacterCircle.getPosition().x) / distance;//идем по иксу с помощью вектора нормали
-				mCharacterPosition.y += 0.1f  * (mPositionGoal.y - mCharacterCircle.getPosition().y) / distance;//идем по игреку так же
+				mCharacterPosition.x += dt * mBaseCharacterSpeed * (mPositionGoal.x - mCharacterCircle.getPosition().x) / distance ;//идем по иксу с помощью вектора нормали
+				mCharacterPosition.y += dt * mBaseCharacterSpeed * (mPositionGoal.y - mCharacterCircle.getPosition().y) / distance ;//идем по игреку так же
 				mCharacterCircle.setPosition(mCharacterPosition);
 				mLineToGoal[int(mLinePos::START)].position = { 
 					mCharacterCircle.getPosition().x + mCircleRadius , 
@@ -89,8 +90,6 @@ public:
 						rotatedY + mArrowToGoal[int(mArrowPos::CENTER)].position.y
 					);
 				}
-
-				//mArrowToGoalTransform.rotate(sf::degrees(rotation), mPositionGoal);
 				
 
 				mLineToGoal[int(mLinePos::START)].position = { mCharacterCircle.getPosition().x + mCircleRadius , mCharacterCircle.getPosition().y + mCircleRadius };
@@ -102,10 +101,7 @@ public:
 					<< "{" << mLineToGoal[int(mLinePos::END)].position.x << " , " << mLineToGoal[int(mLinePos::END)].position.y << "}"
 					<<std::endl;*/
 			}
-			else
-			{ 
-				mHasGoal = false; 
-			}
+			
 		}
 	}
 

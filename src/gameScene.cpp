@@ -20,6 +20,11 @@ void GameScene::handlerEvent(const sf::Event& ev) {
 	if(!guiClick)
 	{
 		mCharacter.setPositionGoal(ev);
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+		{
+			mCharacter.setHasGoal(false);
+			
+		}
 	}
 }
 
@@ -31,6 +36,7 @@ void GameScene::render(sf::RenderWindow& win) {
 
 void GameScene::update(float& dt) {
 	if (mCharacter.getHasGoal()) {
-		mCharacter.move();
+		mCharacter.move(dt);
+		
 	}
 }

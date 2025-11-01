@@ -35,7 +35,7 @@ public:
 		mSceneStack.top()->handlerEvent(ev);
 	}
 
-	static void update(float& dt) {
+	static void update(float&& dt) {
 		if (mSceneStack.empty()) return;
 		mSceneStack.top()->update(dt);
 	}
