@@ -27,8 +27,11 @@ public:
 	bool getHasGoal() { return mHasGoal; }
 	void setHasGoal(bool value) {  mHasGoal = value; }
 
+	bool getIsMoving() { return mIs_Moving; }
+	void setIsMoving(bool value) { mIs_Moving = value; }
+
 	void move(float& dt) {
-		if (this->mHasGoal) {
+		if (this->mIs_Moving) {
 			float distance = sqrt(
 				(mPositionGoal.x - mCharacterCircle.getPosition().x) * (mPositionGoal.x - mCharacterCircle.getPosition().x) + 
 				(mPositionGoal.y - mCharacterCircle.getPosition().y) * (mPositionGoal.y - mCharacterCircle.getPosition().y));//считаем дистанцию (длину от точки А до точки Б). формула длины вектора

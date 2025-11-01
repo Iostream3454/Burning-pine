@@ -18,6 +18,10 @@ void Application::run() {
 		timeSinceLastUpdate += mClock.restart();
 		while (timeSinceLastUpdate > mTargetTps)
 		{
+			while (const std::optional<sf::Event> event = mWindow.pollEvent()) {
+				if (event->is<sf::Event::Closed>()) Window::close(); //close window in singleton
+				SceneManager::handlerEvent(*event);
+			}
 			timeSinceLastUpdate -= mTargetTps;
 			SceneManager::update(mTargetTps.asSeconds());
 		}

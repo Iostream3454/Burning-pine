@@ -20,10 +20,12 @@ void GameScene::handlerEvent(const sf::Event& ev) {
 	if(!guiClick)
 	{
 		mCharacter.setPositionGoal(ev);
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space))
+		if (const auto* keyboardButtonPressed = ev.getIf<sf::Event::KeyPressed>())
 		{
-			mCharacter.setHasGoal(false);
-			
+			if(keyboardButtonPressed->scancode == sf::Keyboard::Scancode::Space)
+			{
+				mCharacter.setIsMoving(!mCharacter.getIsMoving());
+			}
 		}
 	}
 }
