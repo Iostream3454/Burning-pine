@@ -25,20 +25,37 @@ void GameScene::handlerEvent(const sf::Event& ev) {
 	}
 	if(!guiClick)
 	{
-		mCharacter.setPositionGoal(ev);
-		if (const auto* keyboardButtonPressed = ev.getIf<sf::Event::KeyPressed>())
+		if (const auto* mouseButtonPressed = ev.getIf<sf::Event::MouseButtonPressed>())//нажатия мыши
+		{
+			if (mouseButtonPressed->button == sf::Mouse::Button::Left)
+			{
+				mCharacter.setPositionGoal(ev);
+			}
+		}
+
+		if (const auto* keyboardButtonPressed = ev.getIf<sf::Event::KeyPressed>())//нажатия клавы
 		{
 			if(keyboardButtonPressed->scancode == sf::Keyboard::Scancode::Space)
 			{
 				mCharacter.setIsMoving(!mCharacter.getIsMoving());
 			}
 		}
+
+		if (const auto* mouseScrolledEvent = ev.getIf<sf::Event::MouseWheelScrolled>()) {//прокрутка колесиком мыши
+			if (mouseScrolledEvent->delta < 0.f) { //колесико вперед
+				this->mCharacter.zoomIn();
+			}
+			else if (mouseScrolledEvent->delta > 0.f) {//колесико назад
+				this->mCharacter.zoomOut();
+			}
+			Window::instance().setView(this->mCharacter.getView());
+		}
 	}
 }
 
 void GameScene::render(sf::RenderWindow& win) {
-	mGuiLayer.draw();
 	win.draw(mCharacter);
+	mGuiLayer.draw();
 	win.display();
 }
 
