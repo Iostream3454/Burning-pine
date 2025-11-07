@@ -1,0 +1,43 @@
+#pragma once
+
+#include <SFML/Graphics.hpp>
+
+class Camera {
+public:
+
+	void cameraMove(sf::Vector2f& target) {
+		mCameraViewport.setCenter(target);
+	}
+
+	sf::View getCamera() const {
+		return mCameraViewport;
+	}
+
+	void setCameraCenter(const sf::Vector2f& position) {
+		mCameraViewport.setCenter(position);
+	} 
+
+	void zoomIn() {
+		if (mSteps < 3)
+		{
+			++mSteps;
+			mCameraViewport.zoom(mMaxZoom);
+			return;
+		}
+	}
+
+	void zoomOut() {
+		if (mSteps > -3)
+		{
+			--mSteps;
+			mCameraViewport.zoom(mMinZoom);
+			return;
+		}
+	}
+
+private:
+	sf::View	mCameraViewport;			//камера
+	const float mMaxZoom			= 2.0f; //приближение камеры
+	const float mMinZoom			= 0.5f; //удаление камеры
+	short		mSteps				= 0;	// -3..3
+};

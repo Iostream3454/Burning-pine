@@ -28,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\application.h" />
+    <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\character.h" />
     <ClInclude Include="src\gameScene.h" />
     <ClInclude Include="src\mainMenuScene.h" />
