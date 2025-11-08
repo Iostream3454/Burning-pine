@@ -1,9 +1,12 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include "window.h"
 
 class Camera {
 public:
+
+	Camera() { mCameraViewport.setSize(sf::Vector2f(Window::instance().getSize())); }
 
 	void cameraMove(sf::Vector2f& target) {
 		mCameraViewport.setCenter(target);
