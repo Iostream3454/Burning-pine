@@ -6,6 +6,7 @@
 #include <iostream>
 #include "window.h"
 #include "camera.h"
+#include "body.h"
 
 class MainCharacter : public sf::Drawable, public sf::Transformable
 {
@@ -119,6 +120,14 @@ public:
 		return this->mPlayerCamera.getCamera();
 	}
 
+	void updateNeeds() {
+		this->mPersonBody.updateNeeds();
+	}
+
+	std::string showNeeds() {
+		return this->mPersonBody.toString();
+	}
+
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override 
 	{
 		// apply the entity's transform -- combine it with the one that was passed by the caller
@@ -144,11 +153,13 @@ private:
 	Camera			mPlayerCamera;							//камера игрока
 	sf::Vector2f	mCharacterPosition;						// позиция игрока 
 	sf::Texture		mTexture;								// текстура игрока
-
+	
 	sf::VertexArray mLineToGoal;							// линия от игрока к цели
 	sf::VertexArray mArrowToGoal;							// стрека к цели
 	sf::Transform	mArrowToGoalTransform;					// трансформация для стрелки
 	sf::Vector2f	mPositionGoal;							// вектор позиции цели
+	
+	Body mPersonBody;										//тело персонажа
 
 
 	const float		mBaseCharacterSpeed			= 300.0f;	//базовая скорость
