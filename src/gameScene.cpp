@@ -11,8 +11,13 @@ void GameScene::ready() {
 	l = tgui::Label::create("1");
 	mGuiLayer.add(butt, "mainMenu");
 	mGuiLayer.add(l, "lable");
-	l.get()->setAutoSize(true);
+	mNeedsLable = tgui::Label::create("1");
+	mGuiLayer.add(mNeedsLable, "needsLable");
+	mNeedsLable.get()->setAutoLayout(tgui::AutoLayout::Top);
+	mNeedsLable.get()->setAutoLayoutUpdateEnabled(true);
+	mNeedsLable.get()->setHorizontalAlignment(tgui::HorizontalAlignment::Center);
 	l.get()->setAutoLayout(tgui::AutoLayout::Bottom);
+	l.get()->setAutoLayoutUpdateEnabled(true);
 	l.get()->setHorizontalAlignment(tgui::HorizontalAlignment::Center);
 }
 
@@ -63,7 +68,11 @@ void GameScene::update(float& dt) {
 	if (mCharacter.getHasGoal()) {
 		mCharacter.move(dt);
 		if (mCharacter.getIsMoving()) {
-			mTimeSystem.increaseByMinutes(dt);
+			if (mTimeSystem.increaseByMinutes(dt)) 
+			{
+				this->mCharacter.updateNeeds();
+				mNeedsLable.get()->setText(this->mCharacter.showNeeds());
+			}
 			l.get()->setText(mTimeSystem.show());
 		}
 	}

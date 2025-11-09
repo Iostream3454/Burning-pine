@@ -13,6 +13,7 @@ public:
 	void render(sf::RenderWindow& win) override;
 private:
 	tgui::Label::Ptr	l;
+	tgui::Label::Ptr	mNeedsLable;
 	tgui::Gui			mGuiLayer{ Window::instance() };
 	MainCharacter		mCharacter;
 	TimeSystem			mTimeSystem;
