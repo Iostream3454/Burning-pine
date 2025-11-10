@@ -2,6 +2,8 @@
 
 #include "sceneInterface.h"
 #include "window.h"
+#include "character.h"
+#include "timeSystem.h"
 
 class GameScene : public IScene {
 public:
@@ -10,5 +12,10 @@ public:
 	void update(float& dt) override;
 	void render(sf::RenderWindow& win) override;
 private:
-	tgui::Gui mGuiLayer{ Window::instance() };
+	tgui::Label::Ptr	l;
+	tgui::Label::Ptr	mNeedsLable;
+	tgui::Gui			mGuiLayer{ Window::instance() };
+	MainCharacter		mCharacter;
+	TimeSystem			mTimeSystem;
+
 };
