@@ -8,17 +8,17 @@ void GameScene::ready() {
 	tgui::Button::Ptr butt = tgui::Button::create("MainMenu");
 	butt->setHeight(50);
 	butt->setWidth(150);
-	l = tgui::Label::create(this->mTimeSystem.show());
+	mTimeLabel = tgui::Label::create(this->mTimeSystem.show());
 	mGuiLayer.add(butt, "mainMenu");
-	mGuiLayer.add(l, "lable");
+	mGuiLayer.add(mTimeLabel, "lable");
 	mNeedsLable = tgui::Label::create(this->mCharacter.showNeeds());
 	mGuiLayer.add(mNeedsLable, "needsLable");
 	mNeedsLable.get()->setAutoLayout(tgui::AutoLayout::Top);
 	mNeedsLable.get()->setAutoLayoutUpdateEnabled(true);
 	mNeedsLable.get()->setHorizontalAlignment(tgui::HorizontalAlignment::Center);
-	l.get()->setAutoLayout(tgui::AutoLayout::Bottom);
-	l.get()->setAutoLayoutUpdateEnabled(true);
-	l.get()->setHorizontalAlignment(tgui::HorizontalAlignment::Center);
+	mTimeLabel.get()->setAutoLayout(tgui::AutoLayout::Bottom);
+	mTimeLabel.get()->setAutoLayoutUpdateEnabled(true);
+	mTimeLabel.get()->setHorizontalAlignment(tgui::HorizontalAlignment::Center);
 }
 
 void GameScene::handlerEvent(const sf::Event& ev) {
@@ -73,7 +73,7 @@ void GameScene::update(float& dt) {
 				this->mCharacter.updateNeeds();
 				this->mNeedsLable.get()->setText(this->mCharacter.showNeeds());
 			}
-			this->l.get()->setText(mTimeSystem.show());
+			this->mTimeLabel.get()->setText(mTimeSystem.show());
 		}
 	}
 }

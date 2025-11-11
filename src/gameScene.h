@@ -12,7 +12,7 @@ public:
 	void update(float& dt) override;
 	void render(sf::RenderWindow& win) override;
 private:
-	tgui::Label::Ptr	l;
+	tgui::Label::Ptr	mTimeLabel;
 	tgui::Label::Ptr	mNeedsLable;
 	tgui::Gui			mGuiLayer{ Window::instance() };
 	MainCharacter		mCharacter;
