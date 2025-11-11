@@ -20,6 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\application.cpp" />
+    <ClCompile Include="src\body.cpp" />
     <ClCompile Include="src\gameScene.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mainMenuScene.cpp" />
