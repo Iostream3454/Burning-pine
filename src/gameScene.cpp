@@ -8,10 +8,10 @@ void GameScene::ready() {
 	tgui::Button::Ptr butt = tgui::Button::create("MainMenu");
 	butt->setHeight(50);
 	butt->setWidth(150);
-	l = tgui::Label::create("1");
+	l = tgui::Label::create(this->mTimeSystem.show());
 	mGuiLayer.add(butt, "mainMenu");
 	mGuiLayer.add(l, "lable");
-	mNeedsLable = tgui::Label::create("1");
+	mNeedsLable = tgui::Label::create(this->mCharacter.showNeeds());
 	mGuiLayer.add(mNeedsLable, "needsLable");
 	mNeedsLable.get()->setAutoLayout(tgui::AutoLayout::Top);
 	mNeedsLable.get()->setAutoLayoutUpdateEnabled(true);
