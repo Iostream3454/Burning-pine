@@ -65,15 +65,15 @@ void GameScene::render(sf::RenderWindow& win) {
 }
 
 void GameScene::update(float& dt) {
-	if (mCharacter.getHasGoal()) {
-		mCharacter.move(dt);
-		if (mCharacter.getIsMoving()) {
-			if (mTimeSystem.increaseByMinutes(dt)) 
+	if (this->mCharacter.getHasGoal()) {
+		this->mCharacter.move(dt);
+		if (this->mCharacter.getIsMoving()) {
+			if (this->mTimeSystem.increaseByMinutes(dt))
 			{
 				this->mCharacter.updateNeeds();
-				mNeedsLable.get()->setText(this->mCharacter.showNeeds());
+				this->mNeedsLable.get()->setText(this->mCharacter.showNeeds());
 			}
-			l.get()->setText(mTimeSystem.show());
+			this->l.get()->setText(mTimeSystem.show());
 		}
 	}
 }
