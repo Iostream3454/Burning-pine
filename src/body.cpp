@@ -15,11 +15,12 @@ void Body::updateNeeds() {
 	mBleadingLevel += 0;
 	if (mBleadingLevel < 0) mBleadingLevel = 0;
 
+	
 	mStaminaLevel -= 1;
-	if (mHungryLevel > 99) mStaminaLevel -= 2;
-	if (mThirstLevel > 99) mStaminaLevel -= 4;
+	if (mHungryLevel > 99 && (mStaminaLevel - 2) > 0) mStaminaLevel -= 2;
+	if (mThirstLevel > 99 && (mStaminaLevel - 4) > 0) mStaminaLevel -= 4;
 	if (mStaminaLevel > 100) mStaminaLevel = 100;
-	if (mStaminaLevel < 0) mIsSleep = true, mStaminaLevel = 0;
+	if (mStaminaLevel < 2) mIsSleep = true, mStaminaLevel = 2;
 
 	mExhaustionLevel += 0;
 	if (mExhaustionLevel < 0) mExhaustionLevel = 0;
@@ -35,3 +36,19 @@ std::string Body::toString() const {
 		" Doza: " + std::to_string(mRadiationLevel) + " Bleading: " + std::to_string(mBleadingLevel) +
 		" Exhaustion: " + std::to_string(mExhaustionLevel) + " Stamina: " + std::to_string(mStaminaLevel);
 }
+
+unsigned short Body::getThirstLevel() const { return mThirstLevel; }
+
+unsigned short Body::getHungryLevel() const { return mHungryLevel; }
+
+unsigned short Body::getBleadingLevel() const { return mBleadingLevel; }
+
+unsigned short Body::getRadiationLevel() const { return mRadiationLevel; }
+
+unsigned short Body::getExhaustionLevel() const { return mExhaustionLevel; }
+
+unsigned short Body::getStaminaLevel() const { return mStaminaLevel; }
+
+bool Body::isAlive() const { return mIsAlive; }
+
+bool Body::isSleep() const { return mIsSleep; }

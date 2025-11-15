@@ -10,6 +10,22 @@ public:
 
 	std::string toString() const;
 
+	unsigned short getThirstLevel() const;
+
+	unsigned short getHungryLevel() const;
+
+	unsigned short getRadiationLevel() const;
+
+	unsigned short getBleadingLevel() const;
+
+	unsigned short getExhaustionLevel() const;
+
+	unsigned short getStaminaLevel() const;
+
+	bool isAlive() const;
+
+	bool isSleep() const;
+
 private:
 	unsigned short mHungryLevel			= 0;	//голод
 	unsigned short mThirstLevel			= 0;	//жажда
