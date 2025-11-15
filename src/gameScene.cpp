@@ -45,7 +45,7 @@ void GameScene::ready() {
 	row->add(mMainMenuButtton, "MAIN_MENU_BUTTON");
 
 	mTopPanel->add(row, "ROW");
-	mTopPanel->getRenderer()->setBackgroundColor(tgui::Color::Black);
+	mTopPanel->getRenderer()->setBackgroundColor(tgui::Color(25, 26, 25, 125));
 
 	mGuiLayer.add(mTopPanel, "PANEL");
 
