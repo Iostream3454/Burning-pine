@@ -128,6 +128,8 @@ public:
 		return this->mPersonBody.toString();
 	}
 
+	Body& getBody() { return mPersonBody; }
+
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override 
 	{
 		// apply the entity's transform -- combine it with the one that was passed by the caller
