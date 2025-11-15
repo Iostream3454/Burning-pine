@@ -36,6 +36,7 @@
     <ClInclude Include="src\mainMenuScene.h" />
     <ClInclude Include="src\sceneInterface.h" />
     <ClInclude Include="src\sceneManager.h" />
+    <ClInclude Include="src\tguiUtils.h" />
     <ClInclude Include="src\timeSystem.h" />
     <ClInclude Include="src\window.h" />
   </ItemGroup>
