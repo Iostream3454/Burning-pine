@@ -15,8 +15,11 @@ public:
 private:
 	tgui::Button::Ptr	mMainMenuButtton;
 	tgui::Label::Ptr	mTimeLabel;
-	tgui::Label::Ptr	mNeedsLable;
+
 	tgui::Panel::Ptr	mTopPanel;
+	tgui::Panel::Ptr	mBottomPanel;
+
+	tgui::Picture::Ptr	mTimeLabelPic;
 	IconTextWidget::Ptr mThirstyLabel;
 	IconTextWidget::Ptr mHungryLabel;
 	IconTextWidget::Ptr mBleadingLabel;

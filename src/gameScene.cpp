@@ -11,13 +11,25 @@ void GameScene::ready() {
 	mStaminaLabel = IconTextWidget::create();
 	mBleadingLabel = IconTextWidget::create();
 	mExhaustionLabel = IconTextWidget::create();
-	mTopPanel = tgui::Panel::create({ "100%", "8%" });
+	mTopPanel = tgui::Panel::create({ "100%", "6%" });
+	mBottomPanel = tgui::Panel::create({"100%", "6%"}); mBottomPanel->setAutoLayout(tgui::AutoLayout::Bottom);
+	mBottomPanel->getRenderer()->setBackgroundColor(tgui::Color::Green);
 	tgui::HorizontalLayout::Ptr row = tgui::HorizontalLayout::create({ "100%", "100%" });
 	mMainMenuButtton = tgui::Button::create("Main\nmenu");
 	mTimeLabel = tgui::Label::create(this->mTimeSystem.show());
-	
-	mTimeLabel->getRenderer()->setTextureBackground(tgui::Texture({"gfx/televizor.jpg"}));
-	mTimeLabel->getRenderer()->setTextColor(tgui::Color(75, 130, 72));
+	mTimeLabel->setOrigin({ 0.5f, 0.5f });
+
+	mTimeLabelPic = tgui::Picture::create(tgui::Texture("gfx/televizor.jpg"));
+	mTimeLabelPic->setOrigin({ 0.5f, 0.5f });
+	mBottomPanel->add(mTimeLabelPic, "TELIK");
+	mTimeLabelPic->setPosition({"50%", "45%"});
+	mBottomPanel->add(mTimeLabel, "TIME_TEXT");
+	mBottomPanel->getRenderer()->setTextureBackground(tgui::Texture({ "gfx/bottom.png" }));
+
+	mTimeLabel->setPosition({ "50%", "50%" });
+
+	//mTimeLabel->getRenderer()->setTextureBackground(tgui::Texture({"gfx/televizor.jpg"}));
+	mTimeLabel->getRenderer()->setTextColor(tgui::Color(145, 250, 159));
 
 	auto seterForTextLebelNeed = [&](IconTextWidget::Ptr& label, 
 		const std::string&& fon, 
@@ -48,6 +60,7 @@ void GameScene::ready() {
 	mTopPanel->getRenderer()->setBackgroundColor(tgui::Color(25, 26, 25, 125));
 
 	mGuiLayer.add(mTopPanel, "PANEL");
+	mGuiLayer.add(mBottomPanel, "BOTTOM");
 
 	seterForTextLebelNeed(mExhaustionLabel, "gfx/fon.png", "gfx/skull.png", this->mCharacter.getBody().getExhaustionLevel());
 	seterForTextLebelNeed(mThirstyLabel, "gfx/fon.png", "gfx/drink_water.png", this->mCharacter.getBody().getThirstLevel());
@@ -55,10 +68,6 @@ void GameScene::ready() {
 	seterForTextLebelNeed(mHungryLabel, "gfx/fon.png", "gfx/hungry.png", this->mCharacter.getBody().getHungryLevel());
 	seterForTextLebelNeed(mRadiationLabel, "gfx/fon.png", "gfx/radioactive.png", this->mCharacter.getBody().getRadiationLevel());
 	seterForTextLebelNeed(mBleadingLabel, "gfx/fon.png", "gfx/blood.png", this->mCharacter.getBody().getBleadingLevel());
-
-	mGuiLayer.add(mTimeLabel, "TIME");
-	mTimeLabel.get()->setAutoLayout(tgui::AutoLayout::Bottom);
-	mTimeLabel.get()->setHorizontalAlignment(tgui::HorizontalAlignment::Center);
 }
 
 void GameScene::handlerEvent(const sf::Event& ev) {
