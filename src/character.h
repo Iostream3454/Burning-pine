@@ -70,8 +70,8 @@ public:
 		mLineToGoal[int(mLinePos::END)].position = mPositionGoal; 
 
 		mArrowToGoal[int(mArrowPos::CENTER)].position = mPositionGoal;
-		mArrowToGoal[int(mArrowPos::START)].position = { mPositionGoal.x - 15.f, mPositionGoal.y + 15.f };
-		mArrowToGoal[int(mArrowPos::END)].position = { mPositionGoal.x + 15.f, mPositionGoal.y + 15.f };
+		mArrowToGoal[int(mArrowPos::START)].position = { mPositionGoal.x - 15.f, mPositionGoal.y - 15.f };
+		mArrowToGoal[int(mArrowPos::END)].position = { mPositionGoal.x - 15.f, mPositionGoal.y + 15.f };
 
 
 		float rotation = (std::atan2f(
@@ -86,8 +86,8 @@ public:
 			float translatedY = mArrowToGoal[i].position.y - mArrowToGoal[int(mArrowPos::CENTER)].position.y;
 
 			// Поворот в начале координат
-			float rotatedX = translatedX * std::cos(rotation - 3.14156f / 2.f) - translatedY * std::sin(rotation + 3.14156f/2.f);
-			float rotatedY = translatedX * std::sin(rotation + 3.14156f / 2.f) + translatedY * std::cos(rotation - 3.14156f / 2.f);
+			float rotatedX = translatedX * std::cos(rotation) - translatedY * std::sin(rotation);
+			float rotatedY = translatedX * std::sin(rotation) + translatedY * std::cos(rotation);
 
 			// Сдвиг обратно
 			mArrowToGoal[i].position = sf::Vector2f(
