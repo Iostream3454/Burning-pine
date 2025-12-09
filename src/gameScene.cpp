@@ -97,19 +97,23 @@ void GameScene::handlerEvent(const sf::Event& ev) {
 
 		if (const auto* keyboardButtonPressed = ev.getIf<sf::Event::KeyPressed>())//нажатия клавы
 		{
-			if (keyboardButtonPressed->scancode != sf::Keyboard::Scancode::L && mCharacter.getBody().isSleep()) {//выход из сна при действиях
-				mCharacter.trySleep();
-				mIsSleepLabel->setVisible(false);
-			}
 
 			if(keyboardButtonPressed->scancode == sf::Keyboard::Scancode::Space)
 			{
-				if(mCharacter.getHasGoal())
-					mCharacter.setIsMoving(!mCharacter.getIsMoving());
+				if(mCharacter.hasGoal())
+				{
+					mCharacter.setIsMoving();
+					std::cout << mCharacter.getIsDoSomthing() << std::endl;
+				}
 			}
 			else if (keyboardButtonPressed->scancode == sf::Keyboard::Scancode::L) {
 				mCharacter.trySleep();
 				mIsSleepLabel->setVisible(mCharacter.getBody().isSleep()? true : false);
+			}
+
+			if (keyboardButtonPressed->scancode != sf::Keyboard::Scancode::L && mCharacter.getBody().isSleep()) {//выход из сна при действиях
+				mCharacter.trySleep();
+				mIsSleepLabel->setVisible(false);
 			}
 		}
 
@@ -132,10 +136,10 @@ void GameScene::render(sf::RenderWindow& win) {
 }
 
 void GameScene::update(float& dt) {
-	if (this->mCharacter.getHasGoal()) {
-		this->mCharacter.move(dt);
-	}
 	if (this->mCharacter.getIsDoSomthing()) {
+		if (this->mCharacter.isMoving()) {
+			this->mCharacter.move(dt);
+		}
 		if (this->mTimeSystem.increaseByMinutes(dt))
 		{
 			if (this->mCharacter.getBody().getStaminaLevel() > 98 || this->mCharacter.getBody().getThirstLevel() > 98 || this->mCharacter.getBody().getHungryLevel() > 98) {
