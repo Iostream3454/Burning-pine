@@ -25,12 +25,10 @@ public:
 			mTargetObjPosition.x += dt * mBaseCharacterSpeed * (mGoalTargetPosition.x - mTargetObjPosition.x) / distance;//идем по иксу с помощью вектора нормали
 			mTargetObjPosition.y += dt * mBaseCharacterSpeed * (mGoalTargetPosition.y - mTargetObjPosition.y) / distance;//идем по игреку так же
 			moveAbleObject.setPosition(mTargetObjPosition);
-			//
-			//mPlayerCamera.cameraMove(mCharacterPosition);
-			return true;
+			return mHasGoal = mIsMoving = true;
 		}
 		else {
-			return false;
+			return mHasGoal = mIsMoving = false;
 		}//говорим что уже никуда не идем 
 
 	}
@@ -39,13 +37,21 @@ public:
 
 	sf::Vector2f& getGoalTargetPosition() { return mGoalTargetPosition; }
 
-	void setGoalTargetPosition(sf::Vector2f targetValue) { mGoalTargetPosition = targetValue; }
+	void setGoalTargetPosition(sf::Vector2f targetValue) { mGoalTargetPosition = targetValue; mHasGoal = true; }
 
+	bool isMoving() const { return mIsMoving; }
+	bool hasGoal() const { return mHasGoal; }
+
+	void startMove() { mIsMoving = true; }
+	void stopMove() { mIsMoving = false; }
 private:
-	sf::Vector2f	mTargetObjPosition = { 0.f, 0.f };									// позиция объекта 
-	sf::Vector2f	mGoalTargetPosition = { 0.f, 0.f };
-	const float		mBaseCharacterSpeed = 300.0f;										//	базовая скорость
-	float			mCurrentCharacterSpeed = mBaseCharacterSpeed * 1;					// скорость с модификаторами
+	sf::Vector2f	mTargetObjPosition		= { 0.f, 0.f };				// позиция объекта 
+	sf::Vector2f	mGoalTargetPosition		= { 0.f, 0.f };				// позиция цели
+	const float		mBaseCharacterSpeed		= 300.0f;					// базовая скорость
+	float			mCurrentCharacterSpeed	= mBaseCharacterSpeed * 1;	// скорость с модификаторами
+
+	bool			mHasGoal				= false;					// поставлена ли точка, куда надо идти
+	bool			mIsMoving				= false;					// идет ли игрок
 };
 
 //класс отвечает за построение линии сос стрелкой на конце от центра объекта до цели
@@ -163,12 +169,12 @@ public:
 		mPlayerCamera.setCameraCenter(mMovement.getTargetObjPosition());
 	}
 
-	bool getHasGoal() const { return mHasGoal; }
-	void setHasGoal(bool value) {  mHasGoal = value; }
-
-	bool getIsMoving() const { return mIs_Moving; }
+	
 	bool getIsDoSomthing() const { return mIs_doSomthing; }
-	void setIsMoving(bool value) { mIs_Moving = value; mIs_Moving? mIs_doSomthing = true : mIs_doSomthing = false; }
+	void setIsMoving() {  (mIs_doSomthing = !mIs_doSomthing) ? mMovement.startMove() : mMovement.stopMove(); }
+
+	bool isMoving() { return mMovement.isMoving(); }
+	bool hasGoal() { return mMovement.hasGoal(); }
 	void trySleep() {
 		if(!mIs_doSomthing)
 		{
@@ -181,22 +187,18 @@ public:
 	}
 
 	void move(float& dt) {
-		if(mIs_doSomthing)
+		if(mMovement.isMoving())
 		{
-			mIs_doSomthing = mHasGoal = mMovement.move(dt, mCharacterCircle);
+			mIs_doSomthing = mMovement.move(dt, mCharacterCircle);
+			mPlayerCamera.cameraMove(mMovement.getTargetObjPosition());
 			mLineBuilder.updateStartOfLine(mMovement.getTargetObjPosition());
 		}
 	}
 
-
 	void setPositionGoal(const sf::Event& event) {
-		
 		sf::Vector2i pixelPos = sf::Mouse::getPosition(Window::instance());//забираем коорд курсора
 		sf::Vector2f GoalPositon = Window::instance().mapPixelToCoords(pixelPos);//переводим их в игровые (уходим от коорд окна)
-
 		mMovement.setGoalTargetPosition(GoalPositon);
-		mHasGoal = true;
-
 		mLineBuilder.buildArrowLine(GoalPositon, mMovement.getTargetObjPosition());
 	}
 
@@ -218,8 +220,6 @@ public:
 
 	Body& getBody() { return mPersonBody; }
 
-	
-
 private:
 
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const override
@@ -231,7 +231,7 @@ private:
 		// draw the vertex array
 		target.setView(mPlayerCamera.getCamera());
 
-		if (mHasGoal) target.draw(mLineBuilder);
+		if (mMovement.hasGoal()) target.draw(mLineBuilder);
 
 		target.draw(mCharacterCircle, states);
 	}
@@ -239,18 +239,12 @@ private:
 	const float		mCircleRadius				= 25.f;		//размер круга, обозначающий игрока
 
 	sf::CircleShape	mCharacterCircle;						
-	//CircleType		mCirclePresent;						// фигура круга для обозначения игрока
+	//CircleType	mCirclePresent;						// фигура круга для обозначения игрока
 	Camera			mPlayerCamera;							//камера игрока
 	
-	sf::Vector2f	mPositionGoal;							// вектор позиции цели
-	
-	MovementSystem mMovement;								//модуль для передвижения объекта
+	MovementSystem	mMovement;								//модуль для передвижения объекта
 	ArrowLineSystem mLineBuilder;							//строитель линий со стрелкой
-	Body mPersonBody;										//тело персонажа
+	Body			mPersonBody;										//тело персонажа
 
-
-	bool			mHasGoal					= false;	//поставлена ли точка, куда надо идти
-	bool			mIs_Moving					= false;	//идет ли игрок
 	bool			mIs_doSomthing				= false;
-
 };
