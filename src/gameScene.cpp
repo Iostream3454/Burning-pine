@@ -136,14 +136,14 @@ void GameScene::render(sf::RenderWindow& win) {
 }
 
 void GameScene::update(float& dt) {
-	if (this->mCharacter.getIsDoSomthing()) {
-		if (this->mCharacter.isMoving()) {
-			this->mCharacter.move(dt);
+	if (mCharacter.getIsDoSomthing()) {
+		if (mCharacter.isMoving()) {
+			mCharacter.move(dt);
 		}
-		if (this->mTimeSystem.increaseByMinutes(dt))
+		if (mTimeSystem.increaseByMinutes(dt))
 		{
-			if (this->mCharacter.getBody().getStaminaLevel() > 98 || this->mCharacter.getBody().getThirstLevel() > 98 || this->mCharacter.getBody().getHungryLevel() > 98) {
-				this->mCharacter.trySleep();
+			if (mCharacter.getBody().getStaminaLevel() > 98 || mCharacter.getBody().getThirstLevel() > 98 || mCharacter.getBody().getHungryLevel() > 98) {
+				mCharacter.trySleep();
 				mIsSleepLabel->setVisible(false);
 			}
 			this->mCharacter.updateNeeds();
