@@ -2,27 +2,28 @@
 
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
-#include <iostream>
+#include <memory>
 #include "window.h"
 #include "camera.h"
 #include "body.h"
 
+//класс отвечает за перемещение объекта
 class MovementSystem {
 public:
 
 	MovementSystem(sf::Vector2f&& objectStartPosition ) : mTargetObjPosition(objectStartPosition) {}
 
-	bool move(float& dt, sf::Shape& moveAbleObject, sf::Vector2f& goalPosition) {
+	bool move(float& dt, sf::Shape& moveAbleObject) {
 		mTargetObjPosition = moveAbleObject.getPosition();
 
 		float distance = sqrt(
-			(goalPosition.x - mTargetObjPosition.x) * (goalPosition.x - mTargetObjPosition.x) +
-			(goalPosition.y - mTargetObjPosition.y) * (goalPosition.y - mTargetObjPosition.y)
+			(mGoalTargetPosition.x - mTargetObjPosition.x) * (mGoalTargetPosition.x - mTargetObjPosition.x) +
+			(mGoalTargetPosition.y - mTargetObjPosition.y) * (mGoalTargetPosition.y - mTargetObjPosition.y)
 		);//считаем дистанцию (длину от точки А до точки Б). формула длины вектора
 
 		if (distance > 4.f) {//этим условием убираем дергание во время конечной позиции спрайта
-			mTargetObjPosition.x += dt * mBaseCharacterSpeed * (goalPosition.x - mTargetObjPosition.x) / distance;//идем по иксу с помощью вектора нормали
-			mTargetObjPosition.y += dt * mBaseCharacterSpeed * (goalPosition.y - mTargetObjPosition.y) / distance;//идем по игреку так же
+			mTargetObjPosition.x += dt * mBaseCharacterSpeed * (mGoalTargetPosition.x - mTargetObjPosition.x) / distance;//идем по иксу с помощью вектора нормали
+			mTargetObjPosition.y += dt * mBaseCharacterSpeed * (mGoalTargetPosition.y - mTargetObjPosition.y) / distance;//идем по игреку так же
 			moveAbleObject.setPosition(mTargetObjPosition);
 			//
 			//mPlayerCamera.cameraMove(mCharacterPosition);
@@ -36,17 +37,21 @@ public:
 
 	sf::Vector2f& getTargetObjPosition() { return mTargetObjPosition; }
 
+	sf::Vector2f& getGoalTargetPosition() { return mGoalTargetPosition; }
+
+	void setGoalTargetPosition(sf::Vector2f targetValue) { mGoalTargetPosition = targetValue; }
 
 private:
-	sf::Vector2f	mTargetObjPosition = { 0.f, 0.f };													// позиция игрока 
-	const float		mBaseCharacterSpeed = 300.0f;										//базовая скорость
+	sf::Vector2f	mTargetObjPosition = { 0.f, 0.f };									// позиция объекта 
+	sf::Vector2f	mGoalTargetPosition = { 0.f, 0.f };
+	const float		mBaseCharacterSpeed = 300.0f;										//	базовая скорость
 	float			mCurrentCharacterSpeed = mBaseCharacterSpeed * 1;					// скорость с модификаторами
 };
 
-
-class ArrowLine : public sf::Drawable, public sf::Transformable {
+//класс отвечает за построение линии сос стрелкой на конце от центра объекта до цели
+class ArrowLineSystem : public sf::Drawable, public sf::Transformable { 
 public:
-	ArrowLine(sf::Vector2f targetObjPosition = { 0.f, 0.f }, sf::Color lineColor = sf::Color::Blue) :
+	ArrowLineSystem(sf::Vector2f targetObjPosition = { 0.f, 0.f }, sf::Color lineColor = sf::Color::Blue) :
 		mLineToGoal(sf::PrimitiveType::Lines, 2),
 		mArrowToGoal(sf::PrimitiveType::LineStrip, 3)
 	{
@@ -56,7 +61,7 @@ public:
 	}
 
 	void buildArrowLine(sf::Vector2f& goalPosition, sf::Vector2f& objectPosition) {
-		mLineToGoal[int(mLinePos::END)].position = goalPosition;
+		mLineToGoal[int(mLinePos::START)].position = objectPosition;
 
 		mArrowToGoal[int(mArrowPos::CENTER)].position = goalPosition;
 		mArrowToGoal[int(mArrowPos::START)].position = { goalPosition.x - 15.f, goalPosition.y - 15.f };
@@ -85,8 +90,7 @@ public:
 			);
 		}
 
-
-		mLineToGoal[int(mLinePos::START)].position = objectPosition;
+		mLineToGoal[int(mLinePos::END)].position = goalPosition;
 	}
 
 	void updateStartOfLine(sf::Vector2f& objectPosition) {
@@ -102,7 +106,6 @@ private:
 
 		// you may also override states.shader or states.blendMode if you want
 		// draw the vertex array
-
 		target.draw(mLineToGoal);
 		target.draw(mArrowToGoal);
 	}
@@ -114,6 +117,36 @@ private:
 	enum class		mArrowPos : uint8_t { START = 0, CENTER, END }; //точки в стрелке до цели
 };
 
+//класс графического(фигура) представления объекта(немного неясна логика)
+//class ShapeType  {
+//public:
+//	ShapeType(std::unique_ptr<sf::Shape> form) : mBaseShape(std::move(form)) {}
+//protected:
+//	std::unique_ptr<sf::Shape> mBaseShape;
+//};
+//
+//class CircleType : private ShapeType {
+//public:
+//	CircleType(std::unique_ptr<sf::CircleShape> form, sf::Vector2f startPosition = {0.f, 0.f}, float radius = 25.f,  sf::Color shapeColor = sf::Color::Black ) :
+//		ShapeType(std::move(form)),
+//		mCircleRadius(radius)
+//	{ 
+//		/*dynamic_cast<sf::CircleShape*>(mBaseShape.get())->setRadius(mCircleRadius);
+//		dynamic_cast<sf::CircleShape*>(mBaseShape.get())->setOrigin(sf::Vector2f(mCircleRadius, mCircleRadius));
+//		dynamic_cast<sf::CircleShape*>(mBaseShape.get())->setPosition(startPosition);
+//		dynamic_cast<sf::CircleShape*>(mBaseShape.get())->setFillColor(shapeColor);*/
+//	}
+//private:
+//	float		mCircleRadius;					//размер круга, обозначающий игрока
+//};
+//
+//class ObjectPresentationSystem {
+//public:
+//
+//private:
+//
+//};
+
 class MainCharacter : public sf::Drawable, public sf::Transformable
 {
 public:
@@ -122,11 +155,12 @@ public:
 		mCharacterCircle(mCircleRadius),
 		mMovement(sf::Vector2f({ 120.f, 230.f })),
 		mLineBuilder(mMovement.getTargetObjPosition())
+		//mCirclePresent(std::make_unique<sf::CircleShape>(new sf::CircleShape()), mMovement.getTargetObjPosition())
 	{
 		mCharacterCircle.setOrigin(sf::Vector2f{ mCircleRadius, mCircleRadius });
 		mCharacterCircle.setFillColor(sf::Color::Black);
-		mCharacterCircle.setPosition(mCharacterPosition);
-		mPlayerCamera.setCameraCenter(mCharacterPosition);
+		mCharacterCircle.setPosition(mMovement.getTargetObjPosition());
+		mPlayerCamera.setCameraCenter(mMovement.getTargetObjPosition());
 	}
 
 	bool getHasGoal() const { return mHasGoal; }
@@ -149,7 +183,7 @@ public:
 	void move(float& dt) {
 		if(mIs_doSomthing)
 		{
-			mIs_doSomthing = mMovement.move(dt, mCharacterCircle, mPositionGoal);
+			mIs_doSomthing = mHasGoal = mMovement.move(dt, mCharacterCircle);
 			mLineBuilder.updateStartOfLine(mMovement.getTargetObjPosition());
 		}
 	}
@@ -158,11 +192,12 @@ public:
 	void setPositionGoal(const sf::Event& event) {
 		
 		sf::Vector2i pixelPos = sf::Mouse::getPosition(Window::instance());//забираем коорд курсора
-		mPositionGoal = Window::instance().mapPixelToCoords(pixelPos);//переводим их в игровые (уходим от коорд окна)
+		sf::Vector2f GoalPositon = Window::instance().mapPixelToCoords(pixelPos);//переводим их в игровые (уходим от коорд окна)
 
+		mMovement.setGoalTargetPosition(GoalPositon);
 		mHasGoal = true;
 
-		mLineBuilder.buildArrowLine(mPositionGoal, mMovement.getTargetObjPosition());
+		mLineBuilder.buildArrowLine(GoalPositon, mMovement.getTargetObjPosition());
 	}
 
 	void zoomIn() {
@@ -181,41 +216,36 @@ public:
 		this->mPersonBody.updateNeeds();
 	}
 
-	std::string showNeeds() {
-		return this->mPersonBody.toString();
-	}
-
 	Body& getBody() { return mPersonBody; }
 
-	void draw(sf::RenderTarget& target, sf::RenderStates states) const override 
+	
+
+private:
+
+	void draw(sf::RenderTarget& target, sf::RenderStates states) const override
 	{
 		// apply the entity's transform -- combine it with the one that was passed by the caller
 		states.transform *= getTransform(); // getTransform() is defined by sf::Transformable
 
-		// apply the texture
-
-
 		// you may also override states.shader or states.blendMode if you want
 		// draw the vertex array
 		target.setView(mPlayerCamera.getCamera());
-		if (mHasGoal)
-		{
-			target.draw(mLineBuilder);
-		}
+
+		if (mHasGoal) target.draw(mLineBuilder);
+
 		target.draw(mCharacterCircle, states);
 	}
 
-private:
 	const float		mCircleRadius				= 25.f;		//размер круга, обозначающий игрока
 
-	sf::CircleShape	mCharacterCircle;						// фигура круга для обозначения игрока
+	sf::CircleShape	mCharacterCircle;						
+	//CircleType		mCirclePresent;						// фигура круга для обозначения игрока
 	Camera			mPlayerCamera;							//камера игрока
-	sf::Vector2f	mCharacterPosition;						// позиция игрока 
 	
 	sf::Vector2f	mPositionGoal;							// вектор позиции цели
 	
-	MovementSystem mMovement;
-	ArrowLine mLineBuilder;
+	MovementSystem mMovement;								//модуль для передвижения объекта
+	ArrowLineSystem mLineBuilder;							//строитель линий со стрелкой
 	Body mPersonBody;										//тело персонажа
 
 
