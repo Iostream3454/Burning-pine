@@ -13,6 +13,8 @@ public:
 	void update(float& dt) override;
 	void render(sf::RenderWindow& win) override;
 private:
+
+	void updateNeedsText();
 	tgui::Button::Ptr	mMainMenuButtton;
 	tgui::Label::Ptr	mTimeLabel;
 	tgui::Label::Ptr	mIsSleepLabel;

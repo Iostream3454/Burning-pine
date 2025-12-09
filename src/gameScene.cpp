@@ -142,13 +142,17 @@ void GameScene::update(float& dt) {
 				this->mCharacter.trySleep();
 			}
 			this->mCharacter.updateNeeds();
-			this->mExhaustionLabel->mText->setText(std::to_string(this->mCharacter.getBody().getExhaustionLevel()));
-			this->mThirstyLabel->mText->setText(std::to_string(this->mCharacter.getBody().getThirstLevel()));
-			this->mHungryLabel->mText->setText(std::to_string(this->mCharacter.getBody().getHungryLevel()));
-			this->mRadiationLabel->mText->setText(std::to_string(this->mCharacter.getBody().getRadiationLevel()));
-			this->mBleadingLabel->mText->setText(std::to_string(this->mCharacter.getBody().getBleadingLevel()));
-			this->mStaminaLabel->mText->setText(std::to_string(this->mCharacter.getBody().getStaminaLevel()));
+			this->updateNeedsText();
 		}
 		this->mTimeLabel.get()->setText(mTimeSystem.show());
 	}
+}
+
+void GameScene::updateNeedsText() {
+	this->mExhaustionLabel->mText->setText(std::to_string(this->mCharacter.getBody().getExhaustionLevel()));
+	this->mThirstyLabel->mText->setText(std::to_string(this->mCharacter.getBody().getThirstLevel()));
+	this->mHungryLabel->mText->setText(std::to_string(this->mCharacter.getBody().getHungryLevel()));
+	this->mRadiationLabel->mText->setText(std::to_string(this->mCharacter.getBody().getRadiationLevel()));
+	this->mBleadingLabel->mText->setText(std::to_string(this->mCharacter.getBody().getBleadingLevel()));
+	this->mStaminaLabel->mText->setText(std::to_string(this->mCharacter.getBody().getStaminaLevel()));
 }
