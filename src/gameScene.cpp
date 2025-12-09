@@ -19,12 +19,12 @@ void GameScene::ready() {
 	mMainMenuButtton = tgui::Button::create("Main\nmenu");
 	mTimeLabel = tgui::Label::create(this->mTimeSystem.show());
 	mIsSleepLabel->setVisible(false);
+	mTimeLabel->setOrigin({ 0.5f, 0.5f });
 	mIsSleepLabel->setOrigin({ 0.5f, 0.5f });
 	mIsSleepLabel->setPosition({ "50%", "50%" });
 	mIsSleepLabel->getRenderer()->setBackgroundColor(tgui::Color::applyOpacity(tgui::Color::Black, 0.3f));
 	mIsSleepLabel->getRenderer()->setTextColor(tgui::Color::White);
 
-	mTimeLabel->setOrigin({ 0.5f, 0.5f });
 
 
 	mTimeLabelPic = tgui::Picture::create(tgui::Texture("gfx/televizor.jpg"));
@@ -36,7 +36,6 @@ void GameScene::ready() {
 
 	mTimeLabel->setPosition({ "50%", "50%" });
 
-	//mTimeLabel->getRenderer()->setTextureBackground(tgui::Texture({"gfx/televizor.jpg"}));
 	mTimeLabel->getRenderer()->setTextColor(tgui::Color(145, 250, 159));
 
 	auto seterForTextLebelNeed = [&](IconTextWidget::Ptr& label, 
@@ -105,7 +104,8 @@ void GameScene::handlerEvent(const sf::Event& ev) {
 
 			if(keyboardButtonPressed->scancode == sf::Keyboard::Scancode::Space)
 			{
-				mCharacter.setIsMoving(!mCharacter.getIsMoving());
+				if(mCharacter.getHasGoal())
+					mCharacter.setIsMoving(!mCharacter.getIsMoving());
 			}
 			else if (keyboardButtonPressed->scancode == sf::Keyboard::Scancode::L) {
 				mCharacter.trySleep();
