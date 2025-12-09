@@ -15,6 +15,7 @@ public:
 private:
 	tgui::Button::Ptr	mMainMenuButtton;
 	tgui::Label::Ptr	mTimeLabel;
+	tgui::Label::Ptr	mIsSleepLabel;
 
 	tgui::Panel::Ptr	mTopPanel;
 	tgui::Panel::Ptr	mBottomPanel;

@@ -6,6 +6,7 @@
 
 void GameScene::ready() {
 	mThirstyLabel = IconTextWidget::create();
+	mIsSleepLabel = tgui::Label::create("You are sleep... Press any button to cancel");
 	mHungryLabel = IconTextWidget::create();
 	mRadiationLabel = IconTextWidget::create();
 	mStaminaLabel = IconTextWidget::create();
@@ -17,7 +18,14 @@ void GameScene::ready() {
 	tgui::HorizontalLayout::Ptr row = tgui::HorizontalLayout::create({ "100%", "100%" });
 	mMainMenuButtton = tgui::Button::create("Main\nmenu");
 	mTimeLabel = tgui::Label::create(this->mTimeSystem.show());
+	mIsSleepLabel->setVisible(false);
+	mIsSleepLabel->setOrigin({ 0.5f, 0.5f });
+	mIsSleepLabel->setPosition({ "50%", "50%" });
+	mIsSleepLabel->getRenderer()->setBackgroundColor(tgui::Color::applyOpacity(tgui::Color::Black, 0.3f));
+	mIsSleepLabel->getRenderer()->setTextColor(tgui::Color::White);
+
 	mTimeLabel->setOrigin({ 0.5f, 0.5f });
+
 
 	mTimeLabelPic = tgui::Picture::create(tgui::Texture("gfx/televizor.jpg"));
 	mTimeLabelPic->setOrigin({ 0.5f, 0.5f });
@@ -60,6 +68,7 @@ void GameScene::ready() {
 	mTopPanel->getRenderer()->setBackgroundColor(tgui::Color(25, 26, 25, 125));
 
 	mGuiLayer.add(mTopPanel, "PANEL");
+	mGuiLayer.add(mIsSleepLabel,"SLEEP_LABLE");
 	mGuiLayer.add(mBottomPanel, "BOTTOM");
 
 	seterForTextLebelNeed(mExhaustionLabel, "gfx/fon.png", "gfx/skull.png", this->mCharacter.getBody().getExhaustionLevel());
@@ -89,9 +98,18 @@ void GameScene::handlerEvent(const sf::Event& ev) {
 
 		if (const auto* keyboardButtonPressed = ev.getIf<sf::Event::KeyPressed>())//нажатия клавы
 		{
+			if (keyboardButtonPressed->scancode != sf::Keyboard::Scancode::L && mCharacter.getBody().isSleep()) {//выход из сна при действиях
+				mCharacter.trySleep();
+				mIsSleepLabel->setVisible(false);
+			}
+
 			if(keyboardButtonPressed->scancode == sf::Keyboard::Scancode::Space)
 			{
 				mCharacter.setIsMoving(!mCharacter.getIsMoving());
+			}
+			else if (keyboardButtonPressed->scancode == sf::Keyboard::Scancode::L) {
+				mCharacter.trySleep();
+				mIsSleepLabel->setVisible(mCharacter.getBody().isSleep()? true : false);
 			}
 		}
 
@@ -116,18 +134,21 @@ void GameScene::render(sf::RenderWindow& win) {
 void GameScene::update(float& dt) {
 	if (this->mCharacter.getHasGoal()) {
 		this->mCharacter.move(dt);
-		if (this->mCharacter.getIsMoving()) {
-			if (this->mTimeSystem.increaseByMinutes(dt))
-			{
-				this->mCharacter.updateNeeds();
-				this->mExhaustionLabel->mText->setText(std::to_string(this->mCharacter.getBody().getExhaustionLevel()));
-				this->mThirstyLabel->mText->setText(std::to_string(this->mCharacter.getBody().getThirstLevel()));
-				this->mHungryLabel->mText->setText(std::to_string(this->mCharacter.getBody().getHungryLevel()));
-				this->mRadiationLabel->mText->setText(std::to_string(this->mCharacter.getBody().getRadiationLevel()));
-				this->mBleadingLabel->mText->setText(std::to_string(this->mCharacter.getBody().getBleadingLevel()));
-				this->mStaminaLabel->mText->setText(std::to_string(this->mCharacter.getBody().getStaminaLevel()));
+	}
+	if (this->mCharacter.getIsDoSomthing()) {
+		if (this->mTimeSystem.increaseByMinutes(dt))
+		{
+			if (this->mCharacter.getBody().getStaminaLevel() > 98) {
+				this->mCharacter.trySleep();
 			}
-			this->mTimeLabel.get()->setText(mTimeSystem.show());
+			this->mCharacter.updateNeeds();
+			this->mExhaustionLabel->mText->setText(std::to_string(this->mCharacter.getBody().getExhaustionLevel()));
+			this->mThirstyLabel->mText->setText(std::to_string(this->mCharacter.getBody().getThirstLevel()));
+			this->mHungryLabel->mText->setText(std::to_string(this->mCharacter.getBody().getHungryLevel()));
+			this->mRadiationLabel->mText->setText(std::to_string(this->mCharacter.getBody().getRadiationLevel()));
+			this->mBleadingLabel->mText->setText(std::to_string(this->mCharacter.getBody().getBleadingLevel()));
+			this->mStaminaLabel->mText->setText(std::to_string(this->mCharacter.getBody().getStaminaLevel()));
 		}
+		this->mTimeLabel.get()->setText(mTimeSystem.show());
 	}
 }

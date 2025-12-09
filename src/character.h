@@ -36,7 +36,18 @@ public:
 	void setHasGoal(bool value) {  mHasGoal = value; }
 
 	bool getIsMoving() const { return mIs_Moving; }
-	void setIsMoving(bool value) { mIs_Moving = value; }
+	bool getIsDoSomthing() const { return mIs_doSomthing; }
+	void setIsMoving(bool value) { mIs_Moving = value; mIs_Moving? mIs_doSomthing = true : mIs_doSomthing = false; }
+	void trySleep() {
+		if(!mIs_doSomthing)
+		{
+			this->mPersonBody.goToSleep();
+			mIs_doSomthing = true;
+			return;
+		}
+		mIs_doSomthing = false;
+		this->mPersonBody.breakSleep();
+	}
 
 	void move(float& dt) {
 		if (this->mIs_Moving) {
@@ -53,7 +64,7 @@ public:
 				mPlayerCamera.cameraMove(mCharacterPosition);
 			}
 			else { 
-				this->mHasGoal = this->mIs_Moving = false; 
+				this->mHasGoal = this->mIs_Moving = mIs_doSomthing = false;
 				std::cout << "priehali\r"; 
 			}//говорим что уже никуда не идем и выводим веселое сообщение в консоль
 		}
@@ -170,6 +181,7 @@ private:
 
 	bool			mHasGoal					= false;	//поставлена ли точка, куда надо идти
 	bool			mIs_Moving					= false;	//идет ли игрок
+	bool			mIs_doSomthing				= false;
 
 	enum class		mLinePos  :	uint8_t			{ START = 0, END };			 //точки в линии до цели
 	enum class		mArrowPos : uint8_t			{ START = 0, CENTER,  END }; //точки в стрелке до цели
