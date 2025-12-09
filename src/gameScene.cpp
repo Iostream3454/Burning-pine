@@ -138,8 +138,9 @@ void GameScene::update(float& dt) {
 	if (this->mCharacter.getIsDoSomthing()) {
 		if (this->mTimeSystem.increaseByMinutes(dt))
 		{
-			if (this->mCharacter.getBody().getStaminaLevel() > 98) {
+			if (this->mCharacter.getBody().getStaminaLevel() > 98 || this->mCharacter.getBody().getThirstLevel() > 98 || this->mCharacter.getBody().getHungryLevel() > 98) {
 				this->mCharacter.trySleep();
+				mIsSleepLabel->setVisible(false);
 			}
 			this->mCharacter.updateNeeds();
 			this->updateNeedsText();
