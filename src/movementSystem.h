@@ -1,14 +1,14 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-
+#include "shapeTypes.h"
 //класс отвечает за перемещение объекта
 class MovementSystem {
 public:
 
 	MovementSystem(sf::Vector2f&& objectStartPosition) : mTargetObjPosition(objectStartPosition) {}
 
-	bool move(float& dt, sf::Shape& moveAbleObject) {
-		mTargetObjPosition = moveAbleObject.getPosition();
+	bool move(float& dt, ShapeType& moveAbleObject) {
+		//mTargetObjPosition = moveAbleObject.getPosition();
 
 		float distance = sqrt(
 			(mGoalTargetPosition.x - mTargetObjPosition.x) * (mGoalTargetPosition.x - mTargetObjPosition.x) +
@@ -18,7 +18,7 @@ public:
 		if (distance > 4.f) {//этим условием убираем дергание во время конечной позиции спрайта
 			mTargetObjPosition.x += dt * mBaseCharacterSpeed * (mGoalTargetPosition.x - mTargetObjPosition.x) / distance;//идем по иксу с помощью вектора нормали
 			mTargetObjPosition.y += dt * mBaseCharacterSpeed * (mGoalTargetPosition.y - mTargetObjPosition.y) / distance;//идем по игреку так же
-			moveAbleObject.setPosition(mTargetObjPosition);
+			moveAbleObject.setNewPosition(mTargetObjPosition);
 			return mHasGoal = mIsMoving = true;
 		}
 		else {

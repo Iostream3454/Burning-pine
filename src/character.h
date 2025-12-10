@@ -8,26 +8,8 @@
 #include "body.h"
 #include "movementSystem.h"
 #include "arrowBuilder.h"
+#include "shapeTypes.h"
 
-//класс графического(фигура) представления объекта(немного неясна логика)
-//class ShapeType  {
-//protected:
-//	ShapeType(std::unique_ptr<sf::Shape> form) : mBaseShape(std::move(form)) {}
-//
-//	std::unique_ptr<sf::Shape> mBaseShape;
-//};
-//
-//class CircleType final : protected ShapeType {
-//public:
-//	CircleType(std::unique_ptr<sf::CircleShape> form, sf::Vector2f startPosition = {0.f, 0.f}, float radius = 25.f,  sf::Color shapeColor = sf::Color::Black ) :
-//		ShapeType(std::move(form)),
-//		mCircleRadius(radius)
-//		{ 
-//
-//		}
-//private:
-//	float		mCircleRadius;					//размер круга, обозначающий игрока
-//};
 
 
 class MainCharacter final : public sf::Drawable, public sf::Transformable
@@ -35,16 +17,11 @@ class MainCharacter final : public sf::Drawable, public sf::Transformable
 public:
 
 	MainCharacter() : 
-		mCharacterCircle(mCircleRadius),
 		mMovement(sf::Vector2f({ 120.f, 230.f })),
 		mLineBuilder(mMovement.getTargetObjPosition()),
-		mPlayerCamera(mMovement.getTargetObjPosition(), sf::Vector2f(Window::instance().getSize()))
-		//mCirclePresent(std::move(std::make_unique<sf::CircleShape>(new sf::CircleShape())), mMovement.getTargetObjPosition())
-	{
-		mCharacterCircle.setOrigin(sf::Vector2f{ mCircleRadius, mCircleRadius });
-		mCharacterCircle.setFillColor(sf::Color::Black);
-		mCharacterCircle.setPosition(mMovement.getTargetObjPosition());
-	}
+		mPlayerCamera(mMovement.getTargetObjPosition(), sf::Vector2f(Window::instance().getSize())),
+		mCirclePresent(std::move(std::make_unique<sf::CircleShape>()), mMovement.getTargetObjPosition())
+	{ }
 
 	
 	bool getIsDoSomthing() const { return mIs_doSomthing; }
@@ -66,7 +43,7 @@ public:
 	void move(float& dt) {
 		if(mMovement.isMoving())
 		{
-			mIs_doSomthing = mMovement.move(dt, mCharacterCircle);
+			mIs_doSomthing = mMovement.move(dt, mCirclePresent);
 			mPlayerCamera.cameraMove(mMovement.getTargetObjPosition());
 			mLineBuilder.updateStartOfLine(mMovement.getTargetObjPosition());
 		}
@@ -106,14 +83,11 @@ private:
 
 		if (mMovement.hasGoal()) target.draw(mLineBuilder);
 
-		target.draw(mCharacterCircle, states);
+		target.draw(mCirclePresent, states);
 	}
 
-	const float		mCircleRadius				= 25.f;		//размер круга, обозначающий игрока
-
-	sf::CircleShape	mCharacterCircle;						// фигура круга для обозначения игрока
-	//CircleType		mCirclePresent;
 	MovementSystem	mMovement;								//модуль для передвижения объекта
+	CircleType		mCirclePresent;
 	ArrowLineSystem mLineBuilder;							//строитель линий со стрелкой
 	Camera			mPlayerCamera;							//камера игрока
 	Body			mPersonBody;							//тело персонажа
