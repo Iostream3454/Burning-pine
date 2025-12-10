@@ -125,35 +125,26 @@ private:
 
 //класс графического(фигура) представления объекта(немного неясна логика)
 //class ShapeType  {
-//public:
-//	ShapeType(std::unique_ptr<sf::Shape> form) : mBaseShape(std::move(form)) {}
 //protected:
+//	ShapeType(std::unique_ptr<sf::Shape> form) : mBaseShape(std::move(form)) {}
+//
 //	std::unique_ptr<sf::Shape> mBaseShape;
 //};
 //
-//class CircleType : private ShapeType {
+//class CircleType final : protected ShapeType {
 //public:
 //	CircleType(std::unique_ptr<sf::CircleShape> form, sf::Vector2f startPosition = {0.f, 0.f}, float radius = 25.f,  sf::Color shapeColor = sf::Color::Black ) :
 //		ShapeType(std::move(form)),
 //		mCircleRadius(radius)
-//	{ 
-//		/*dynamic_cast<sf::CircleShape*>(mBaseShape.get())->setRadius(mCircleRadius);
-//		dynamic_cast<sf::CircleShape*>(mBaseShape.get())->setOrigin(sf::Vector2f(mCircleRadius, mCircleRadius));
-//		dynamic_cast<sf::CircleShape*>(mBaseShape.get())->setPosition(startPosition);
-//		dynamic_cast<sf::CircleShape*>(mBaseShape.get())->setFillColor(shapeColor);*/
-//	}
+//		{ 
+//
+//		}
 //private:
 //	float		mCircleRadius;					//размер круга, обозначающий игрока
 //};
-//
-//class ObjectPresentationSystem {
-//public:
-//
-//private:
-//
-//};
 
-class MainCharacter : public sf::Drawable, public sf::Transformable
+
+class MainCharacter final : public sf::Drawable, public sf::Transformable
 {
 public:
 
@@ -162,7 +153,7 @@ public:
 		mMovement(sf::Vector2f({ 120.f, 230.f })),
 		mLineBuilder(mMovement.getTargetObjPosition()),
 		mPlayerCamera(mMovement.getTargetObjPosition(), sf::Vector2f(Window::instance().getSize()))
-		//mCirclePresent(std::make_unique<sf::CircleShape>(new sf::CircleShape()), mMovement.getTargetObjPosition())
+		//mCirclePresent(std::move(std::make_unique<sf::CircleShape>(new sf::CircleShape())), mMovement.getTargetObjPosition())
 	{
 		mCharacterCircle.setOrigin(sf::Vector2f{ mCircleRadius, mCircleRadius });
 		mCharacterCircle.setFillColor(sf::Color::Black);
@@ -215,7 +206,7 @@ public:
 	}
 
 	void updateNeeds() {
-		this->mPersonBody.updateNeeds();
+		mPersonBody.updateNeeds();
 	}
 
 	Body& getBody() { return mPersonBody; }
@@ -238,9 +229,8 @@ private:
 
 	const float		mCircleRadius				= 25.f;		//размер круга, обозначающий игрока
 
-	sf::CircleShape	mCharacterCircle;						
-	//CircleType	mCirclePresent;						// фигура круга для обозначения игрока
-	
+	sf::CircleShape	mCharacterCircle;						// фигура круга для обозначения игрока
+	//CircleType		mCirclePresent;
 	MovementSystem	mMovement;								//модуль для передвижения объекта
 	ArrowLineSystem mLineBuilder;							//строитель линий со стрелкой
 	Camera			mPlayerCamera;							//камера игрока
