@@ -79,12 +79,8 @@ public:
 		mLineBuilder.buildArrowLine(GoalPositon, mMovement.getTargetObjPosition());
 	}
 
-	void zoomIn() {
-		mPlayerCamera.zoomIn();
-	}
-
-	void zoomOut() {
-		mPlayerCamera.zoomOut();
+	void zoomCamera(const float wheelDelta) {
+		mPlayerCamera.zoomCamera(wheelDelta);
 	}
 
 	sf::View getView() const {

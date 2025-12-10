@@ -20,23 +20,27 @@ public:
 		mCameraViewport.setCenter(position);
 	} 
 
-	void zoomIn() {
-		if (mSteps < 3)
+	void zoomCamera(const float wheelDelta) {
+		if(wheelDelta < 0.f)
 		{
-			++mSteps;
-			mCameraViewport.zoom(mMaxZoom);
-			return;
+			if (mSteps < 3)
+			{
+				++mSteps;
+				mCameraViewport.zoom(mMaxZoom);
+				return;
+			}
+		}
+		else 
+		{
+			if (mSteps > -3)
+			{
+				--mSteps;
+				mCameraViewport.zoom(mMinZoom);
+				return;
+			}
 		}
 	}
 
-	void zoomOut() {
-		if (mSteps > -3)
-		{
-			--mSteps;
-			mCameraViewport.zoom(mMinZoom);
-			return;
-		}
-	}
 
 private:
 	sf::View	mCameraViewport;			//камера
