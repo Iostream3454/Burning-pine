@@ -27,7 +27,6 @@ public:
 			{
 				++mSteps;
 				mCameraViewport.zoom(mMaxZoom);
-				return;
 			}
 		}
 		else 
@@ -36,9 +35,9 @@ public:
 			{
 				--mSteps;
 				mCameraViewport.zoom(mMinZoom);
-				return;
 			}
 		}
+		Window::instance().setView(mCameraViewport);
 	}
 
 

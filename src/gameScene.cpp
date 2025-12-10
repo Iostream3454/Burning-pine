@@ -119,7 +119,6 @@ void GameScene::handlerEvent(const sf::Event& ev) {
 
 		if (const auto* mouseScrolledEvent = ev.getIf<sf::Event::MouseWheelScrolled>()) {//прокрутка колесиком мыши
 			mCharacter.zoomCamera(mouseScrolledEvent->delta);
-			Window::instance().setView(this->mCharacter.getView());
 		}
 	}
 }
