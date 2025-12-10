@@ -160,13 +160,13 @@ public:
 	MainCharacter() : 
 		mCharacterCircle(mCircleRadius),
 		mMovement(sf::Vector2f({ 120.f, 230.f })),
-		mLineBuilder(mMovement.getTargetObjPosition())
+		mLineBuilder(mMovement.getTargetObjPosition()),
+		mPlayerCamera(mMovement.getTargetObjPosition(), sf::Vector2f(Window::instance().getSize()))
 		//mCirclePresent(std::make_unique<sf::CircleShape>(new sf::CircleShape()), mMovement.getTargetObjPosition())
 	{
 		mCharacterCircle.setOrigin(sf::Vector2f{ mCircleRadius, mCircleRadius });
 		mCharacterCircle.setFillColor(sf::Color::Black);
 		mCharacterCircle.setPosition(mMovement.getTargetObjPosition());
-		mPlayerCamera.setCameraCenter(mMovement.getTargetObjPosition());
 	}
 
 	
@@ -240,11 +240,11 @@ private:
 
 	sf::CircleShape	mCharacterCircle;						
 	//CircleType	mCirclePresent;						// фигура круга для обозначения игрока
-	Camera			mPlayerCamera;							//камера игрока
 	
 	MovementSystem	mMovement;								//модуль для передвижения объекта
 	ArrowLineSystem mLineBuilder;							//строитель линий со стрелкой
-	Body			mPersonBody;										//тело персонажа
+	Camera			mPlayerCamera;							//камера игрока
+	Body			mPersonBody;							//тело персонажа
 
 	bool			mIs_doSomthing				= false;
 };

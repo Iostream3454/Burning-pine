@@ -6,7 +6,7 @@
 class Camera {
 public:
 
-	Camera() { mCameraViewport.setSize(sf::Vector2f(Window::instance().getSize())); }
+	Camera(sf::Vector2f cameraCenter, sf::Vector2f cameraSize) : mCameraViewport(cameraCenter, cameraSize) { }
 
 	void cameraMove(sf::Vector2f& target) {
 		mCameraViewport.setCenter(target);
