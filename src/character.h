@@ -46,15 +46,6 @@ public:
 		this->mPersonBody.breakSleep();
 	}
 
-	void move(float& dt) {
-		if(mMovement.isMoving())
-		{
-			mIs_doSomthing = mMovement.move(dt, mCirclePresent);
-			mPlayerCamera.cameraMove(mMovement.getTargetObjPosition());
-			mLineBuilder.updateStartOfLine(mMovement.getTargetObjPosition());
-		}
-	}
-
 	void updateState(float& dt, bool timeStepIsPass) {
 		if (mMovement.isMoving())
 		{
