@@ -1,11 +1,18 @@
 #pragma once
 
 #include <string>
+#include <vector>
+#include <memory>
+#include "needs.h"
 
 class NeedsManager
 {
 public:
-	NeedsManager(){}
+
+	NeedsManager() {}
+	NeedsManager(std::vector<std::unique_ptr<Need>>& listOfNeeds) :
+		mListOfNeeds(std::move(listOfNeeds))
+	{}
 
 	void updateNeeds();
 
@@ -31,7 +38,8 @@ public:
 
 	void breakSleep();
 
-private:
+private: 
+	std::vector<std::unique_ptr<Need>> mListOfNeeds;
 	unsigned short mHungryLevel			= 0;	//голод
 	unsigned short mThirstLevel			= 0;	//жажда
 	unsigned short mRadiationLevel		= 0;	//облучение

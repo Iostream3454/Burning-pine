@@ -20,7 +20,8 @@ public:
 		mMovement(sf::Vector2f({ 120.f, 230.f })),
 		mLineBuilder(mMovement.getTargetObjPosition()),
 		mPlayerCamera(mMovement.getTargetObjPosition(), sf::Vector2f(Window::instance().getSize())),
-		mCirclePresent(std::move(std::make_unique<sf::CircleShape>()), mMovement.getTargetObjPosition())
+		mCirclePresent(std::move(std::make_unique<sf::CircleShape>()), mMovement.getTargetObjPosition()),
+		mPersonBody({}/*std::move(std::vector<std::unique_ptr<Need>>({ std::make_unique<Hungry>(0), std::make_unique<Thirst>(0) }))*/)
 	{ }
 
 	

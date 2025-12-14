@@ -30,6 +30,7 @@
   <ItemGroup>
     <ClInclude Include="src\application.h" />
     <ClInclude Include="src\arrowBuilder.h" />
+    <ClInclude Include="src\needs.h" />
     <ClInclude Include="src\needsManager.h" />
     <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\character.h" />
