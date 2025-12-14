@@ -79,10 +79,6 @@ public:
 		mPlayerCamera.zoomCamera(wheelDelta);
 	}
 
-	sf::View getView() const {
-		return this->mPlayerCamera.getCamera();
-	}
-
 	Body& getBody() { return mPersonBody; }
 
 private:
