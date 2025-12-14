@@ -23,7 +23,7 @@ public:
 	void zoomCamera(const float wheelDelta) {
 		if(wheelDelta < 0.f)
 		{
-			if (mSteps < 3)
+			if (mSteps < mMaxStep)
 			{
 				++mSteps;
 				mCameraViewport.zoom(mMaxZoom);
@@ -31,7 +31,7 @@ public:
 		}
 		else 
 		{
-			if (mSteps > -3)
+			if (mSteps > mMinStep)
 			{
 				--mSteps;
 				mCameraViewport.zoom(mMinZoom);
@@ -42,8 +42,9 @@ public:
 
 
 private:
-	sf::View	mCameraViewport;			//камера
-	const float mMaxZoom			= 2.0f; //приближение камеры
-	const float mMinZoom			= 0.5f; //удаление камеры
-	short		mSteps				= 0;	// -3..3
+	sf::View		mCameraViewport;			//	камера
+	const float		mMaxZoom			= 2.0f; //	приближение камеры
+	const float		mMinZoom			= 0.5f; //	удаление камеры
+	short			mSteps				= 0;	//	текущее приближение
+	const short		mMaxStep = 3, mMinStep = -3;//	границы приближения
 };
