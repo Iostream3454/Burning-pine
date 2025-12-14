@@ -25,7 +25,13 @@ public:
 
 	
 	bool getIsDoSomthing() const { return mIs_doSomthing; }
-	void setIsMoving() {  (mIs_doSomthing = !mIs_doSomthing) ? mMovement.startMove() : mMovement.stopMove(); }
+	void commandToMove() {
+		if(mMovement.hasGoal())
+		{
+			(mIs_doSomthing = !mIs_doSomthing) ? mMovement.startMove() : mMovement.stopMove();
+		}
+		std::cout << mIs_doSomthing << std::endl;
+	}
 
 	bool isMoving() { return mMovement.isMoving(); }
 	bool hasGoal() { return mMovement.hasGoal(); }
@@ -49,6 +55,19 @@ public:
 		}
 	}
 
+	void updateState(float& dt, bool timeStepIsPass) {
+		if (mMovement.isMoving())
+		{
+			mIs_doSomthing = mMovement.move(dt, mCirclePresent);
+			mPlayerCamera.cameraMove(mMovement.getTargetObjPosition());
+			mLineBuilder.updateStartOfLine(mMovement.getTargetObjPosition());
+		}
+
+		if (timeStepIsPass) {
+			mPersonBody.updateNeeds();
+		}
+	}
+
 	void setPositionGoal(const sf::Event& event) {
 		sf::Vector2i pixelPos = sf::Mouse::getPosition(Window::instance());//забираем коорд курсора
 		sf::Vector2f GoalPositon = Window::instance().mapPixelToCoords(pixelPos);//переводим их в игровые (уходим от коорд окна)
@@ -62,10 +81,6 @@ public:
 
 	sf::View getView() const {
 		return this->mPlayerCamera.getCamera();
-	}
-
-	void updateNeeds() {
-		mPersonBody.updateNeeds();
 	}
 
 	Body& getBody() { return mPersonBody; }

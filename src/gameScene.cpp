@@ -100,11 +100,7 @@ void GameScene::handlerEvent(const sf::Event& ev) {
 
 			if(keyboardButtonPressed->scancode == sf::Keyboard::Scancode::Space)
 			{
-				if(mCharacter.hasGoal())
-				{
-					mCharacter.setIsMoving();
-					std::cout << mCharacter.getIsDoSomthing() << std::endl;
-				}
+				mCharacter.commandToMove();
 			}
 			else if (keyboardButtonPressed->scancode == sf::Keyboard::Scancode::L) {
 				mCharacter.trySleep();
@@ -131,16 +127,14 @@ void GameScene::render(sf::RenderWindow& win) {
 
 void GameScene::update(float& dt) {
 	if (mCharacter.getIsDoSomthing()) {
-		if (mCharacter.isMoving()) {
-			mCharacter.move(dt);
-		}
-		if (mTimeSystem.increaseByMinutes(dt))
+		bool timeStepIsPass = mTimeSystem.increaseByMinutes(dt);
+		mCharacter.updateState(dt, timeStepIsPass);
+		if (timeStepIsPass)
 		{
 			if (mCharacter.getBody().getStaminaLevel() > 98 || mCharacter.getBody().getThirstLevel() > 98 || mCharacter.getBody().getHungryLevel() > 98) {
 				mCharacter.trySleep();
 				mIsSleepLabel->setVisible(false);
 			}
-			this->mCharacter.updateNeeds();
 			this->updateNeedsText();
 		}
 		this->mTimeLabel.get()->setText(mTimeSystem.show());
