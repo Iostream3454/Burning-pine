@@ -1,6 +1,6 @@
-#include "body.h"
+#include "needsManager.h"
 
-void Body::updateNeeds() {
+void NeedsManager::updateNeeds() {
 	//Hungry
 	mHungryLevel += 3;
 	if (mHungryLevel > 100) mHungryLevel = 100;
@@ -45,35 +45,35 @@ void Body::updateNeeds() {
 	}
 }
 
-std::string Body::toString() const {
+std::string NeedsManager::toString() const {
 	return "Hungry: " + std::to_string(mHungryLevel) + " Thirst: " + std::to_string(mThirstLevel) +
 		" Doza: " + std::to_string(mRadiationLevel) + " Bleading: " + std::to_string(mBleadingLevel) +
 		" Exhaustion: " + std::to_string(mExhaustionLevel) + " Stamina: " + std::to_string(mStaminaLevel);
 }
 
-unsigned short Body::getThirstLevel() const { return mThirstLevel; }
+unsigned short NeedsManager::getThirstLevel() const { return mThirstLevel; }
 
-unsigned short Body::getHungryLevel() const { return mHungryLevel; }
+unsigned short NeedsManager::getHungryLevel() const { return mHungryLevel; }
 
-unsigned short Body::getBleadingLevel() const { return mBleadingLevel; }
+unsigned short NeedsManager::getBleadingLevel() const { return mBleadingLevel; }
 
-unsigned short Body::getRadiationLevel() const { return mRadiationLevel; }
+unsigned short NeedsManager::getRadiationLevel() const { return mRadiationLevel; }
 
-unsigned short Body::getExhaustionLevel() const { return mExhaustionLevel; }
+unsigned short NeedsManager::getExhaustionLevel() const { return mExhaustionLevel; }
 
-unsigned short Body::getStaminaLevel() const { return mStaminaLevel; }
+unsigned short NeedsManager::getStaminaLevel() const { return mStaminaLevel; }
 
-bool Body::isAlive() const { return mIsAlive; }
+bool NeedsManager::isAlive() const { return mIsAlive; }
 
-bool Body::isSleep() const { return mIsSleep; }
+bool NeedsManager::isSleep() const { return mIsSleep; }
 
-void Body::goToSleep() {
+void NeedsManager::goToSleep() {
 	if(this->mThirstLevel < 99 && this->mHungryLevel < 99)
 	{
 		this->mIsSleep = true;
 	}
 }
 
-void Body::breakSleep() {
+void NeedsManager::breakSleep() {
 	this->mIsSleep = false;
 }

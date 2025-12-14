@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\application.cpp" />
-    <ClCompile Include="src\body.cpp" />
+    <ClCompile Include="src\needsManager.cpp" />
     <ClCompile Include="src\gameScene.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mainMenuScene.cpp" />
@@ -30,7 +30,7 @@
   <ItemGroup>
     <ClInclude Include="src\application.h" />
     <ClInclude Include="src\arrowBuilder.h" />
-    <ClInclude Include="src\body.h" />
+    <ClInclude Include="src\needsManager.h" />
     <ClInclude Include="src\camera.h" />
     <ClInclude Include="src\character.h" />
     <ClInclude Include="src\gameScene.h" />

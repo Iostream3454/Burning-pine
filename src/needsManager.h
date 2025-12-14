@@ -1,10 +1,11 @@
 #pragma once
 
 #include <string>
-class Body
+
+class NeedsManager
 {
 public:
-	Body(){}
+	NeedsManager(){}
 
 	void updateNeeds();
 

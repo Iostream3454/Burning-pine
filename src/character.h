@@ -5,7 +5,7 @@
 #include <memory>
 #include "window.h"
 #include "camera.h"
-#include "body.h"
+#include "needsManager.h"
 #include "movementSystem.h"
 #include "arrowBuilder.h"
 #include "shapeTypes.h"
@@ -68,7 +68,7 @@ public:
 		mPlayerCamera.zoomCamera(wheelDelta);
 	}
 
-	Body& getBody() { return mPersonBody; }
+	NeedsManager& getBody() { return mPersonBody; }
 
 private:
 
@@ -90,7 +90,7 @@ private:
 	CircleType		mCirclePresent;
 	ArrowLineSystem mLineBuilder;							//строитель линий со стрелкой
 	Camera			mPlayerCamera;							//камера игрока
-	Body			mPersonBody;							//тело персонажа
+	NeedsManager	mPersonBody;							//тело персонажа
 
 	bool			mIs_doSomthing				= false;
 };

@@ -33,7 +33,7 @@
     <ClCompile Include="src\timeSystem.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\body.cpp">
+    <ClCompile Include="src\needsManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -65,10 +65,19 @@
     <ClInclude Include="src\camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\body.h">
+    <ClInclude Include="src\needsManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\tguiUtils.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\arrowBuilder.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\movementSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\shapeTypes.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
