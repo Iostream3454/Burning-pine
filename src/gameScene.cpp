@@ -92,6 +92,10 @@ void GameScene::handlerEvent(const sf::Event& ev) {
 			if (mouseButtonPressed->button == sf::Mouse::Button::Left)
 			{
  				mCharacter.setPositionGoal(ev);
+				if (mCharacter.getBody().isSleep()) {
+					mCharacter.trySleep();
+					mIsSleepLabel->setVisible(false);
+				}
 			}
 		}
 
