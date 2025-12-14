@@ -33,8 +33,6 @@ public:
 		std::cout << mIs_doSomthing << std::endl;
 	}
 
-	bool isMoving() { return mMovement.isMoving(); }
-	bool hasGoal() { return mMovement.hasGoal(); }
 	void trySleep() {
 		if(!mIs_doSomthing)
 		{
