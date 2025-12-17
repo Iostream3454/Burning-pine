@@ -10,9 +10,14 @@ class NeedsManager
 public:
 
 	NeedsManager() {}
-	NeedsManager(std::vector<std::unique_ptr<Need>>& listOfNeeds) :
-		mListOfNeeds(std::move(listOfNeeds))
-	{}
+	NeedsManager(std::vector<std::unique_ptr<Need>>&& listOfNeeds)
+	{
+		mListOfNeeds = std::move(listOfNeeds);
+	}
+
+	void addNeed(std::unique_ptr<Need> need) {
+		mListOfNeeds.push_back(std::move(need));
+	}
 
 	void updateNeeds();
 

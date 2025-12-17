@@ -8,14 +8,15 @@ public:
 		mCurrentLevel(currentLevel),
 		mMaxLevel(maxLevel),
 		mMinLevel(minLevel),
-		mChangeRate(changeRate)
+		mChangeRate(changeRate),
+		mCriticalRate(criticalRate)
 	{
 	}
 
 	virtual void update() = 0;
 	virtual bool isCritical() = 0;
 
-	virtual ~Need()	{}
+	virtual ~Need() = default;
 protected:
 	short mCurrentLevel = 0;	//текущий уровень
 	short mMaxLevel = 0;	//верхний предел
@@ -38,6 +39,8 @@ public:
 	bool isCritical() override {
 		return mCurrentLevel > static_cast<short>(mCriticalRate * mMaxLevel);
 	}
+
+	Thirst() = default;
 };
 
 class Hungry : public Need {
@@ -54,6 +57,8 @@ public:
 	bool isCritical() override {
 		return mCurrentLevel > static_cast<short>(mCriticalRate * mMaxLevel);
 	}
+
+	Hungry() = default;
 };
 
 class Stamina : public Need {
@@ -70,4 +75,6 @@ public:
 	bool isCritical() override {
 		return mCurrentLevel < static_cast<short>(mCriticalRate * mMaxLevel);
 	}
+
+	Stamina() = default;
 };

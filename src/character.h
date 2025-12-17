@@ -5,6 +5,7 @@
 #include <memory>
 #include "window.h"
 #include "camera.h"
+#include "needs.h"
 #include "needsManager.h"
 #include "movementSystem.h"
 #include "arrowBuilder.h"
@@ -20,9 +21,12 @@ public:
 		mMovement(sf::Vector2f({ 120.f, 230.f })),
 		mLineBuilder(mMovement.getTargetObjPosition()),
 		mPlayerCamera(mMovement.getTargetObjPosition(), sf::Vector2f(Window::instance().getSize())),
-		mCirclePresent(std::move(std::make_unique<sf::CircleShape>()), mMovement.getTargetObjPosition()),
-		mPersonBody({}/*std::move(std::vector<std::unique_ptr<Need>>({ std::make_unique<Hungry>(0), std::make_unique<Thirst>(0) }))*/)
-	{ }
+		mCirclePresent(std::move(std::make_unique<sf::CircleShape>()), mMovement.getTargetObjPosition())
+	{ 
+		mPersonBody.addNeed(std::move(std::make_unique<Hungry>(0)));
+		mPersonBody.addNeed(std::move(std::make_unique<Thirst>(0)));
+		mPersonBody.addNeed(std::move(std::make_unique<Stamina>(0)));
+	}
 
 	
 	bool getIsDoSomthing() const { return mIs_doSomthing; }
