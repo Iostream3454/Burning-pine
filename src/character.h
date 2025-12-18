@@ -58,7 +58,7 @@ public:
 		}
 
 		if (timeStepIsPass) {
-			mPersonBody.updateNeeds();
+			//mPersonBody.updateNeeds();
 		}
 	}
 

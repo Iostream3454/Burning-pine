@@ -44,6 +44,7 @@
     <ClInclude Include="src\timeSystem.h" />
     <ClInclude Include="src\utilsFunctions.h" />
     <ClInclude Include="src\window.h" />
+    <ClInclude Include="src\world.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>

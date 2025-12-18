@@ -5,6 +5,7 @@
 #include "character.h"
 #include "timeSystem.h"
 #include "tguiUtils.h"
+#include "world.h"
 
 class GameScene : public IScene {
 public:
@@ -32,5 +33,5 @@ private:
 	MainCharacter		mCharacter;
 	tgui::Gui			mGuiLayer{ Window::instance() };
 	TimeSystem			mTimeSystem;
-
+	World				mWorld;
 };

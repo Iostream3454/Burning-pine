@@ -77,6 +77,10 @@ void GameScene::ready() {
 	seterForTextLebelNeed(mHungryLabel, "gfx/fon.png", "gfx/hungry.png", this->mCharacter.getBody().getHungryLevel());
 	seterForTextLebelNeed(mRadiationLabel, "gfx/fon.png", "gfx/radioactive.png", this->mCharacter.getBody().getRadiationLevel());
 	seterForTextLebelNeed(mBleadingLabel, "gfx/fon.png", "gfx/blood.png", this->mCharacter.getBody().getBleadingLevel());
+
+	std::cout << mWorld.getVertexCount() << std::endl;
+	sf::Vector2f test = mWorld.getMapSize();
+	std::cout << "X: " << test.x << "Y: " << test.y << std::endl;
 }
 
 void GameScene::handlerEvent(const sf::Event& ev) {
@@ -93,9 +97,11 @@ void GameScene::handlerEvent(const sf::Event& ev) {
 			if (mouseButtonPressed->button == sf::Mouse::Button::Left)
 			{
 				sf::Vector2f goalPosition = getMouseCursorClick();
-				//check map border
- 				mCharacter.setPositionGoal(goalPosition);
-				//
+				if(mWorld.checkPointOnOutOfBounds(goalPosition))//check map border
+				{
+					mCharacter.setPositionGoal(goalPosition);
+				}
+
 				if (mCharacter.getBody().isSleep()) {
 					mCharacter.trySleep();
 					mIsSleepLabel->setVisible(false);
@@ -128,6 +134,7 @@ void GameScene::handlerEvent(const sf::Event& ev) {
 }
 
 void GameScene::render(sf::RenderWindow& win) {
+	win.draw(mWorld);
 	win.draw(mCharacter);
 	mGuiLayer.draw();
 	win.display();
@@ -139,10 +146,10 @@ void GameScene::update(float& dt) {
 		mCharacter.updateState(dt, timeStepIsPass);
 		if (timeStepIsPass)
 		{
-			if (mCharacter.getBody().getStaminaLevel() > 98 || mCharacter.getBody().getThirstLevel() > 98 || mCharacter.getBody().getHungryLevel() > 98) {
+			/*if (mCharacter.getBody().getStaminaLevel() > 98 || mCharacter.getBody().getThirstLevel() > 98 || mCharacter.getBody().getHungryLevel() > 98) {
 				mCharacter.trySleep();
 				mIsSleepLabel->setVisible(false);
-			}
+			}*/
 			this->updateNeedsText();
 		}
 		this->mTimeLabel.get()->setText(mTimeSystem.show());
