@@ -42,6 +42,7 @@
     <ClInclude Include="src\shapeTypes.h" />
     <ClInclude Include="src\tguiUtils.h" />
     <ClInclude Include="src\timeSystem.h" />
+    <ClInclude Include="src\utilsFunctions.h" />
     <ClInclude Include="src\window.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

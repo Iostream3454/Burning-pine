@@ -62,11 +62,9 @@ public:
 		}
 	}
 
-	void setPositionGoal(const sf::Event& event) {
-		sf::Vector2i pixelPos = sf::Mouse::getPosition(Window::instance());//забираем коорд курсора
-		sf::Vector2f GoalPositon = Window::instance().mapPixelToCoords(pixelPos);//переводим их в игровые (уходим от коорд окна)
-		mMovement.setGoalTargetPosition(GoalPositon);
-		mLineBuilder.buildArrowLine(GoalPositon, mMovement.getTargetObjPosition());
+	void setPositionGoal(sf::Vector2f& goalPosition) {
+		mMovement.setGoalTargetPosition(goalPosition);
+		mLineBuilder.buildArrowLine(goalPosition, mMovement.getTargetObjPosition());
 	}
 
 	void zoomCamera(const float wheelDelta) {

@@ -2,6 +2,7 @@
 #include "gameScene.h"
 #include "sceneManager.h"
 #include "timeSystem.h"
+#include "utilsFunctions.h"
 
 
 void GameScene::ready() {
@@ -91,7 +92,10 @@ void GameScene::handlerEvent(const sf::Event& ev) {
 		{
 			if (mouseButtonPressed->button == sf::Mouse::Button::Left)
 			{
- 				mCharacter.setPositionGoal(ev);
+				sf::Vector2f goalPosition = getMouseCursorClick();
+				//check map border
+ 				mCharacter.setPositionGoal(goalPosition);
+				//
 				if (mCharacter.getBody().isSleep()) {
 					mCharacter.trySleep();
 					mIsSleepLabel->setVisible(false);
