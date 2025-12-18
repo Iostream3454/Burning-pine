@@ -21,6 +21,12 @@ public:
 
 	void updateNeeds();
 
+	void update() {
+		for(auto& var : mListOfNeeds)
+		{
+			var->update();
+		}
+	}
 	std::string toString() const;
 
 	unsigned short getThirstLevel() const;

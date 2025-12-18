@@ -78,3 +78,39 @@ public:
 
 	Stamina() = default;
 };
+
+class Bleading : public Need {
+public:
+	Bleading(short currentLevel, short maxLevel = 100, short minLevel = 0, float changeRate = 1.7f, float criticalRate = 0.1f) :
+		Need(currentLevel, maxLevel, minLevel, changeRate, criticalRate)
+	{
+	}
+
+	void update() override {
+		mCurrentLevel = std::clamp<short>(mCurrentLevel - static_cast<short>(mChangeRate * 12), mMinLevel, mMaxLevel);
+	}
+
+	bool isCritical() override {
+		return mCurrentLevel > static_cast<short>(mCriticalRate * mMaxLevel);
+	}
+
+	Bleading() = default;
+};
+
+class Exhaustion : public Need {
+public:
+	Exhaustion(short currentLevel, short maxLevel = 100, short minLevel = 0, float changeRate = 1.7f, float criticalRate = 0.1f) :
+		Need(currentLevel, maxLevel, minLevel, changeRate, criticalRate)
+	{
+	}
+
+	void update() override {
+		mCurrentLevel = std::clamp<short>(mCurrentLevel - static_cast<short>(mChangeRate * 12), mMinLevel, mMaxLevel);
+	}
+
+	bool isCritical() override {
+		return mCurrentLevel > static_cast<short>(mCriticalRate * mMaxLevel);
+	}
+
+	Exhaustion() = default;
+};
