@@ -78,7 +78,6 @@ void GameScene::ready() {
 	seterForTextLebelNeed(mRadiationLabel, "gfx/fon.png", "gfx/radioactive.png", this->mCharacter.getBody().getRadiationLevel());
 	seterForTextLebelNeed(mBleadingLabel, "gfx/fon.png", "gfx/blood.png", this->mCharacter.getBody().getBleadingLevel());
 
-	std::cout << mWorld.getVertexCount() << std::endl;
 	sf::Vector2f test = mWorld.getMapSize();
 	std::cout << "X: " << test.x << "Y: " << test.y << std::endl;
 }
