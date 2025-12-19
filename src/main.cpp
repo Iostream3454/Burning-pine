@@ -1,4 +1,5 @@
 #include "application.h"
+#include <vld.h>
 //main.cpp need to enter into window main loop only!!!
 
 int main() {
