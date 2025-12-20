@@ -41,3 +41,20 @@ public:
 private:
 	float		mCircleRadius;					//размер круга, обозначающий игрока
 };
+
+class RectangleType final : public ShapeType {
+public:
+	RectangleType(std::unique_ptr<sf::RectangleShape> form, sf::Vector2f startPosition = { 0.f, 0.f }, sf::Vector2f size = { 25.f, 25.f }, sf::Color shapeColor = sf::Color::Black) :
+		ShapeType(std::move(form)),
+		mRectangleSize(size)
+	{
+		sf::RectangleShape* temp = dynamic_cast<sf::RectangleShape*>(mBaseShape.get());
+		temp->setSize(mRectangleSize);
+		temp->setOrigin({mRectangleSize.x / 2, mRectangleSize.y / 2	});
+		temp->setFillColor(shapeColor);
+		temp->setPosition(startPosition);
+		temp = nullptr;
+	}
+private:
+	sf::Vector2f	mRectangleSize;					//размер круга, обозначающий игрока
+};
