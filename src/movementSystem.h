@@ -21,11 +21,11 @@ public:
 	void startMove();
 	void stopMove();
 private:
-	sf::Vector2f	mTargetObjPosition = { 0.f, 0.f };				// позиция объекта 
-	sf::Vector2f	mGoalTargetPosition = { 0.f, 0.f };				// позиция цели
-	const float		mBaseCharacterSpeed = 300.0f;					// базовая скорость
-	float			mCurrentCharacterSpeed = mBaseCharacterSpeed * 1;	// скорость с модификаторами
+	sf::Vector2f	mTargetObjPosition		= { 0.f, 0.f };				// позиция объекта 
+	sf::Vector2f	mGoalTargetPosition		= { 0.f, 0.f };				// позиция цели
+	const float		mBaseCharacterSpeed		= 300.0f;					// базовая скорость
+	float			mCurrentCharacterSpeed	= mBaseCharacterSpeed * 1;	// скорость с модификаторами
 
-	bool			mHasGoal = false;					// поставлена ли точка, куда надо идти
-	bool			mIsMoving = false;					// идет ли игрок
+	bool			mHasGoal				= false;					// поставлена ли точка, куда надо идти
+	bool			mIsMoving				= false;					// идет ли игрок
 };

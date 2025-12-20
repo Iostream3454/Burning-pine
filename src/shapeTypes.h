@@ -26,5 +26,5 @@ class RectangleType final : public ShapeType {
 public:
 	RectangleType(std::unique_ptr<sf::RectangleShape> form, sf::Vector2f startPosition = { 0.f, 0.f }, sf::Vector2f size = { 25.f, 25.f }, sf::Color shapeColor = sf::Color::Black);
 private:
-	sf::Vector2f	mRectangleSize;					//размер круга, обозначающий игрока
+	sf::Vector2f	mRectangleSize;					//размер прямоугольника, обозначающий игрока
 };
