@@ -1,44 +1,19 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "window.h"
 
 class Camera {
 public:
 
-	Camera(sf::Vector2f cameraCenter, sf::Vector2f cameraSize) : mCameraViewport(cameraCenter, cameraSize) { }
+	Camera(sf::Vector2f cameraCenter, sf::Vector2f cameraSize);
 
-	void cameraMove(sf::Vector2f& target) {
-		mCameraViewport.setCenter(target);
-	}
+	void cameraMove(sf::Vector2f& target);
 
-	sf::View getCamera() const {
-		return mCameraViewport;
-	}
+	sf::View getCamera() const;
 
-	void setCameraCenter(const sf::Vector2f& position) {
-		mCameraViewport.setCenter(position);
-	} 
+	void setCameraCenter(const sf::Vector2f& position);
 
-	void zoomCamera(const float wheelDelta) {
-		if(wheelDelta < 0.f)
-		{
-			if (mSteps < mMaxStep)
-			{
-				++mSteps;
-				mCameraViewport.zoom(mMaxZoom);
-			}
-		}
-		else 
-		{
-			if (mSteps > mMinStep)
-			{
-				--mSteps;
-				mCameraViewport.zoom(mMinZoom);
-			}
-		}
-		Window::instance().setView(mCameraViewport);
-	}
+	void zoomCamera(const float wheelDelta);
 
 
 private:

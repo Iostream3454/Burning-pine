@@ -1,17 +1,9 @@
 #pragma once
 
-#include <algorithm>
 
 class Need {
 public:
-	Need(short currentLevel, short maxLevel = 100, short minLevel = 0, float changeRate = 1.3f, float criticalRate = 0.8f) :
-		mCurrentLevel(currentLevel),
-		mMaxLevel(maxLevel),
-		mMinLevel(minLevel),
-		mChangeRate(changeRate),
-		mCriticalRate(criticalRate)
-	{
-	}
+	Need(short currentLevel, short maxLevel = 100, short minLevel = 0, float changeRate = 1.3f, float criticalRate = 0.8f);
 
 	virtual void update() = 0;
 	virtual bool isCritical() = 0;
@@ -27,90 +19,55 @@ protected:
 
 class Thirst : public Need {
 public:
-	Thirst(short currentLevel, short maxLevel = 100, short minLevel = 0, float changeRate = 1.8f, float criticalRate = 0.8f) :
-		Need(currentLevel, maxLevel, minLevel, changeRate, criticalRate)
-	{
-	}
+	Thirst(short currentLevel, short maxLevel = 100, short minLevel = 0, float changeRate = 1.8f, float criticalRate = 0.8f);
 
-	void update() override {
-		mCurrentLevel = std::clamp<short>(mCurrentLevel + static_cast<short>(mChangeRate * 12), mMinLevel, mMaxLevel);
-	}
+	void update() override;
 
-	bool isCritical() override {
-		return mCurrentLevel > static_cast<short>(mCriticalRate * mMaxLevel);
-	}
+	bool isCritical() override;
 
 	Thirst() = default;
 };
 
 class Hungry : public Need {
 public:
-	Hungry(short currentLevel, short maxLevel = 100, short minLevel = 0, float changeRate = 1.3f, float criticalRate = 0.8f) :
-		Need(currentLevel, maxLevel, minLevel, changeRate, criticalRate)
-	{
-	}
+	Hungry(short currentLevel, short maxLevel = 100, short minLevel = 0, float changeRate = 1.3f, float criticalRate = 0.8f);
 
-	void update() override {
-		mCurrentLevel = std::clamp<short>(mCurrentLevel + static_cast<short>(mChangeRate * 12), mMinLevel, mMaxLevel);
-	}
+	void update() override;
 
-	bool isCritical() override {
-		return mCurrentLevel > static_cast<short>(mCriticalRate * mMaxLevel);
-	}
+	bool isCritical() override;
 
 	Hungry() = default;
 };
 
 class Stamina : public Need {
 public:
-	Stamina(short currentLevel, short maxLevel = 100, short minLevel = 0, float changeRate = 1.7f, float criticalRate = 0.1f) :
-		Need(currentLevel, maxLevel, minLevel, changeRate, criticalRate)
-	{
-	}
+	Stamina(short currentLevel, short maxLevel = 100, short minLevel = 0, float changeRate = 1.7f, float criticalRate = 0.1f);
 
-	void update() override {
-		mCurrentLevel = std::clamp<short>(mCurrentLevel - static_cast<short>(mChangeRate * 12), mMinLevel, mMaxLevel);
-	}
+	void update() override;
 
-	bool isCritical() override {
-		return mCurrentLevel < static_cast<short>(mCriticalRate * mMaxLevel);
-	}
+	bool isCritical() override;
 
 	Stamina() = default;
 };
 
 class Bleading : public Need {
 public:
-	Bleading(short currentLevel, short maxLevel = 100, short minLevel = 0, float changeRate = 1.7f, float criticalRate = 0.1f) :
-		Need(currentLevel, maxLevel, minLevel, changeRate, criticalRate)
-	{
-	}
+	Bleading(short currentLevel, short maxLevel = 100, short minLevel = 0, float changeRate = 1.7f, float criticalRate = 0.1f);
 
-	void update() override {
-		mCurrentLevel = std::clamp<short>(mCurrentLevel - static_cast<short>(mChangeRate * 12), mMinLevel, mMaxLevel);
-	}
+	void update() override;
 
-	bool isCritical() override {
-		return mCurrentLevel > static_cast<short>(mCriticalRate * mMaxLevel);
-	}
+	bool isCritical() override;
 
 	Bleading() = default;
 };
 
 class Exhaustion : public Need {
 public:
-	Exhaustion(short currentLevel, short maxLevel = 100, short minLevel = 0, float changeRate = 1.7f, float criticalRate = 0.1f) :
-		Need(currentLevel, maxLevel, minLevel, changeRate, criticalRate)
-	{
-	}
+	Exhaustion(short currentLevel, short maxLevel = 100, short minLevel = 0, float changeRate = 1.7f, float criticalRate = 0.1f);
 
-	void update() override {
-		mCurrentLevel = std::clamp<short>(mCurrentLevel - static_cast<short>(mChangeRate * 12), mMinLevel, mMaxLevel);
-	}
+	void update() override;
 
-	bool isCritical() override {
-		return mCurrentLevel > static_cast<short>(mCriticalRate * mMaxLevel);
-	}
+	bool isCritical() override;
 
 	Exhaustion() = default;
 };

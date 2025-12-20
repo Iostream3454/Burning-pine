@@ -77,3 +77,19 @@ void NeedsManager::goToSleep() {
 void NeedsManager::breakSleep() {
 	this->mIsSleep = false;
 }
+
+NeedsManager::NeedsManager(std::vector<std::unique_ptr<Need>>&& listOfNeeds)
+{
+	mListOfNeeds = std::move(listOfNeeds);
+}
+
+void NeedsManager::addNeed(std::unique_ptr<Need> need) {
+	mListOfNeeds.push_back(std::move(need));
+}
+
+void NeedsManager::update() {
+	for (auto& var : mListOfNeeds)
+	{
+		var->update();
+	}
+}

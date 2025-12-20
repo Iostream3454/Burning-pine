@@ -10,23 +10,14 @@ class NeedsManager
 public:
 
 	NeedsManager() {}
-	NeedsManager(std::vector<std::unique_ptr<Need>>&& listOfNeeds)
-	{
-		mListOfNeeds = std::move(listOfNeeds);
-	}
+	NeedsManager(std::vector<std::unique_ptr<Need>>&& listOfNeeds);
 
-	void addNeed(std::unique_ptr<Need> need) {
-		mListOfNeeds.push_back(std::move(need));
-	}
+	void addNeed(std::unique_ptr<Need> need);
 
 	void updateNeeds();
 
-	void update() {
-		for(auto& var : mListOfNeeds)
-		{
-			var->update();
-		}
-	}
+	void update();
+
 	std::string toString() const;
 
 	unsigned short getThirstLevel() const;

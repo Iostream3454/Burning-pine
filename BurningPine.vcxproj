@@ -20,12 +20,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\application.cpp" />
+    <ClCompile Include="src\arrowBuilder.cpp" />
+    <ClCompile Include="src\camera.cpp" />
+    <ClCompile Include="src\character.cpp" />
+    <ClCompile Include="src\movementSystem.cpp" />
+    <ClCompile Include="src\needs.cpp" />
     <ClCompile Include="src\needsManager.cpp" />
     <ClCompile Include="src\gameScene.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\mainMenuScene.cpp" />
     <ClCompile Include="src\sceneManager.cpp" />
+    <ClCompile Include="src\shapeTypes.cpp" />
     <ClCompile Include="src\timeSystem.cpp" />
+    <ClCompile Include="src\world.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\application.h" />

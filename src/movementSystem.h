@@ -5,39 +5,21 @@
 class MovementSystem {
 public:
 
-	MovementSystem(sf::Vector2f&& objectStartPosition) : mTargetObjPosition(objectStartPosition) {}
+	MovementSystem(sf::Vector2f&& objectStartPosition);
 
-	bool move(float& dt, ShapeType& moveAbleObject) {
-		//mTargetObjPosition = moveAbleObject.getPosition();
+	bool move(float& dt, ShapeType& moveAbleObject);
 
-		float distance = sqrt(
-			(mGoalTargetPosition.x - mTargetObjPosition.x) * (mGoalTargetPosition.x - mTargetObjPosition.x) +
-			(mGoalTargetPosition.y - mTargetObjPosition.y) * (mGoalTargetPosition.y - mTargetObjPosition.y)
-		);//считаем дистанцию (длину от точки А до точки Б). формула длины вектора
+	sf::Vector2f& getTargetObjPosition();
 
-		if (distance > 4.f) {//этим условием убираем дергание во время конечной позиции спрайта
-			mTargetObjPosition.x += dt * mBaseCharacterSpeed * (mGoalTargetPosition.x - mTargetObjPosition.x) / distance;//идем по иксу с помощью вектора нормали
-			mTargetObjPosition.y += dt * mBaseCharacterSpeed * (mGoalTargetPosition.y - mTargetObjPosition.y) / distance;//идем по игреку так же
-			moveAbleObject.setNewPosition(mTargetObjPosition);
-			return mHasGoal = mIsMoving = true;
-		}
-		else {
-			return mHasGoal = mIsMoving = false;
-		}//говорим что уже никуда не идем 
+	sf::Vector2f& getGoalTargetPosition();
 
-	}
+	void setGoalTargetPosition(sf::Vector2f targetValue);
 
-	sf::Vector2f& getTargetObjPosition() { return mTargetObjPosition; }
+	bool isMoving() const;
+	bool hasGoal() const;
 
-	sf::Vector2f& getGoalTargetPosition() { return mGoalTargetPosition; }
-
-	void setGoalTargetPosition(sf::Vector2f targetValue) { mGoalTargetPosition = targetValue; mHasGoal = true; }
-
-	bool isMoving() const { return mIsMoving; }
-	bool hasGoal() const { return mHasGoal; }
-
-	void startMove() { mIsMoving = true; }
-	void stopMove() { mIsMoving = false; }
+	void startMove();
+	void stopMove();
 private:
 	sf::Vector2f	mTargetObjPosition = { 0.f, 0.f };				// позиция объекта 
 	sf::Vector2f	mGoalTargetPosition = { 0.f, 0.f };				// позиция цели
