@@ -13,7 +13,7 @@ MainCharacter::MainCharacter() :
 {
 	mPersonBody.addNeed(std::string("Hungry"), std::move(std::make_unique<Hungry>(0)));
 	mPersonBody.addNeed(std::string("Thirst"), std::move(std::make_unique<Thirst>(0)));
-	mPersonBody.addNeed(std::string("Stamina"), std::move(std::make_unique<Stamina>(0)));
+	mPersonBody.addNeed(std::string("Stamina"), std::move(std::make_unique<Stamina>(66)));
 }
 
 

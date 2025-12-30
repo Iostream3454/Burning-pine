@@ -9,8 +9,6 @@ class NeedsManager
 {
 public:
 
-	NeedsManager() {}
-
 	void addNeed(const std::string needName, std::unique_ptr<Need> need);
 
 	unsigned short getNeedValue(const std::string& needName);
