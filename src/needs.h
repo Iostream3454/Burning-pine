@@ -7,6 +7,7 @@ public:
 
 	virtual void update() = 0;
 	virtual bool isCritical() = 0;
+	short getValue() { return mCurrentLevel;}
 
 	virtual ~Need() = default;
 protected:

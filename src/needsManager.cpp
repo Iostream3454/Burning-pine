@@ -78,18 +78,15 @@ void NeedsManager::breakSleep() {
 	this->mIsSleep = false;
 }
 
-NeedsManager::NeedsManager(std::vector<std::unique_ptr<Need>>&& listOfNeeds)
-{
-	mListOfNeeds = std::move(listOfNeeds);
+void NeedsManager::addNeed(const std::string needName, std::unique_ptr<Need> need) {
+	mListOfNeeds.insert({ needName ,std::move(need) });
 }
 
-void NeedsManager::addNeed(std::unique_ptr<Need> need) {
-	mListOfNeeds.push_back(std::move(need));
-}
+unsigned short NeedsManager::getNeedValue(const std::string& needName) { return mListOfNeeds.find(needName)->second->getValue(); }
 
 void NeedsManager::update() {
 	for (auto& var : mListOfNeeds)
 	{
-		var->update();
+		var.second->update();
 	}
 }

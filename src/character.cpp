@@ -3,6 +3,7 @@
 #include "needs.h"
 
 #include <memory>
+#include <string>
 
 MainCharacter::MainCharacter() :
 	mMovement(sf::Vector2f({ 120.f, 230.f })),
@@ -10,9 +11,9 @@ MainCharacter::MainCharacter() :
 	mPlayerCamera(mMovement.getTargetObjPosition(), sf::Vector2f(Window::instance().getSize())),
 	mCirclePresent(std::move(std::make_unique<sf::CircleShape>()), mMovement.getTargetObjPosition())
 {
-	mPersonBody.addNeed(std::move(std::make_unique<Hungry>(0)));
-	mPersonBody.addNeed(std::move(std::make_unique<Thirst>(0)));
-	mPersonBody.addNeed(std::move(std::make_unique<Stamina>(0)));
+	mPersonBody.addNeed(std::string("Hungry"), std::move(std::make_unique<Hungry>(0)));
+	mPersonBody.addNeed(std::string("Thirst"), std::move(std::make_unique<Thirst>(0)));
+	mPersonBody.addNeed(std::string("Stamina"), std::move(std::make_unique<Stamina>(0)));
 }
 
 
@@ -45,7 +46,7 @@ void MainCharacter::updateState(float& dt, bool timeStepIsPass) {
 	}
 
 	if (timeStepIsPass) {
-		//mPersonBody.updateNeeds();
+		mPersonBody.update();
 	}
 }
 

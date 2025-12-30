@@ -71,12 +71,12 @@ void GameScene::ready() {
 	mGuiLayer.add(mIsSleepLabel,"SLEEP_LABLE");
 	mGuiLayer.add(mBottomPanel, "BOTTOM");
 
-	seterForTextLebelNeed(mExhaustionLabel, "gfx/fon.png", "gfx/skull.png", this->mCharacter.getBody().getExhaustionLevel());
-	seterForTextLebelNeed(mThirstyLabel, "gfx/fon.png", "gfx/drink_water.png", this->mCharacter.getBody().getThirstLevel());
-	seterForTextLebelNeed(mStaminaLabel, "gfx/fon.png", "gfx/stamina.png", this->mCharacter.getBody().getStaminaLevel());
-	seterForTextLebelNeed(mHungryLabel, "gfx/fon.png", "gfx/hungry.png", this->mCharacter.getBody().getHungryLevel());
-	seterForTextLebelNeed(mRadiationLabel, "gfx/fon.png", "gfx/radioactive.png", this->mCharacter.getBody().getRadiationLevel());
-	seterForTextLebelNeed(mBleadingLabel, "gfx/fon.png", "gfx/blood.png", this->mCharacter.getBody().getBleadingLevel());
+	seterForTextLebelNeed(mExhaustionLabel, "gfx/fon.png", "gfx/skull.png", 0);
+	seterForTextLebelNeed(mThirstyLabel, "gfx/fon.png", "gfx/drink_water.png", this->mCharacter.getBody().getNeedValue("Thirst"));
+	seterForTextLebelNeed(mStaminaLabel, "gfx/fon.png", "gfx/stamina.png", this->mCharacter.getBody().getNeedValue("Stamina"));
+	seterForTextLebelNeed(mHungryLabel, "gfx/fon.png", "gfx/hungry.png", this->mCharacter.getBody().getNeedValue("Hungry"));
+	seterForTextLebelNeed(mRadiationLabel, "gfx/fon.png", "gfx/radioactive.png", 0);
+	seterForTextLebelNeed(mBleadingLabel, "gfx/fon.png", "gfx/blood.png", 0);
 
 	sf::Vector2f test = mWorld.getMapSize();
 	std::cout << "X: " << test.x << "Y: " << test.y << std::endl;
@@ -156,10 +156,10 @@ void GameScene::update(float& dt) {
 }
 
 void GameScene::updateNeedsText() {
-	this->mExhaustionLabel->mText->setText(std::to_string(this->mCharacter.getBody().getExhaustionLevel()));
-	this->mThirstyLabel->mText->setText(std::to_string(this->mCharacter.getBody().getThirstLevel()));
-	this->mHungryLabel->mText->setText(std::to_string(this->mCharacter.getBody().getHungryLevel()));
-	this->mRadiationLabel->mText->setText(std::to_string(this->mCharacter.getBody().getRadiationLevel()));
-	this->mBleadingLabel->mText->setText(std::to_string(this->mCharacter.getBody().getBleadingLevel()));
-	this->mStaminaLabel->mText->setText(std::to_string(this->mCharacter.getBody().getStaminaLevel()));
+	//this->mExhaustionLabel->mText->setText(std::to_string(0));
+	this->mThirstyLabel->mText->setText(std::to_string(this->mCharacter.getBody().getNeedValue("Thirst")));
+	this->mHungryLabel->mText->setText(std::to_string(this->mCharacter.getBody().getNeedValue("Hungry")));
+	//this->mRadiationLabel->mText->setText(std::to_string(0));
+	//this->mBleadingLabel->mText->setText(std::to_string(0));
+	this->mStaminaLabel->mText->setText(std::to_string(this->mCharacter.getBody().getNeedValue("Stamina")));
 }

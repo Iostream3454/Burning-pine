@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <vector>
+#include <unordered_map>
 #include <memory>
 #include "needs.h"
 
@@ -10,27 +10,12 @@ class NeedsManager
 public:
 
 	NeedsManager() {}
-	NeedsManager(std::vector<std::unique_ptr<Need>>&& listOfNeeds);
 
-	void addNeed(std::unique_ptr<Need> need);
+	void addNeed(const std::string needName, std::unique_ptr<Need> need);
 
-	void updateNeeds();
+	unsigned short getNeedValue(const std::string& needName);
 
 	void update();
-
-	std::string toString() const;
-
-	unsigned short getThirstLevel() const;
-
-	unsigned short getHungryLevel() const;
-
-	unsigned short getRadiationLevel() const;
-
-	unsigned short getBleadingLevel() const;
-
-	unsigned short getExhaustionLevel() const;
-
-	unsigned short getStaminaLevel() const;
 
 	bool isAlive() const;
 
@@ -41,7 +26,7 @@ public:
 	void breakSleep();
 
 private: 
-	std::vector<std::unique_ptr<Need>> mListOfNeeds;	//вектор нужд персонажа
+	std::unordered_map<std::string, std::unique_ptr<Need>> mListOfNeeds;	//вектор нужд персонажа
 	unsigned short mHungryLevel			= 0;			//голод
 	unsigned short mThirstLevel			= 0;			//жажда
 	unsigned short mRadiationLevel		= 0;			//облучение
