@@ -7,11 +7,9 @@ public:
 
 	Camera(sf::Vector2f cameraCenter, sf::Vector2f cameraSize);
 
-	void cameraMove(sf::Vector2f& target);
+	void cameraMove(const sf::Vector2f& target);
 
 	sf::View getCamera() const;
-
-	void setCameraCenter(const sf::Vector2f& position);
 
 	void zoomCamera(const float wheelDelta);
 
